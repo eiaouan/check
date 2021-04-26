@@ -1,0 +1,404 @@
+
+
+@font-face {
+
+    font-family: 'icomoon';
+    src:url('icomoon/fonts/icomoon.eot');
+    src:url('icomoon/fonts/icomoon.eot?#iefix') format('embedded-opentype'),
+    url('icomoon/fonts/icomoon.ttf') format('truetype'),
+    url('icomoon/fonts/icomoon.woff') format('woff'),
+    url('icomoon/fonts/icomoon.svg?#icomoon') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+ /* 顶部 */
+ .flex-top {
+     position: fixed;
+     width: 100%;
+     height: 105px;
+     background: rgb(36, 36, 36);
+     z-index: 1;
+ }
+.top {
+    position: relative;
+    width: 1100px;
+    height: 70px;
+    min-width: 890px;
+    margin: 0 auto;
+    color: rgb(194, 194, 194);
+}
+
+/* logo */
+.logo {
+    display: inline-block;
+    width: 157px;
+    height: 69px;
+    margin-right: 20px;
+    font-size: 0;
+    line-height: 69px;
+    color: rgb(221, 221, 221);
+    background: url("../images/base/topbar.png");
+    background-size: 152%;
+}
+
+/* 顶部导航 */
+.nav {
+    display: inline-block;
+    position: absolute;
+    width: 500px;
+}
+
+.nav-son {
+    display: inline-block;
+    padding:  0 15px;
+    line-height: 69px;
+}
+
+.nav-son:hover {
+    background: #000;
+}
+
+
+.nav-hot {
+    position: absolute;
+    top: 20px;
+    right: -10px;
+    width: 28px;
+    height: 19px;
+    border-radius: 7px;
+    background: url("../images/base/topbar.png");
+    background-position: 50px 0px;
+}
+
+#index-sea {
+    display: inline-block;
+    position: absolute;
+    top: 20px;
+    right: 225px;
+    width: 158px;
+    height: 32px;
+    font-size: 12px;
+    padding-left: 32px;
+    margin-left: 40px;
+    border-radius: 17px;
+    background: #fff url(../images/base/topbar.png);
+    background-position: 0px 117px;
+    outline: none;
+}
+
+.create {
+    display: inline-block;
+    position: absolute;
+    top: 20px;
+    right: 110px;
+    width: 90px;
+    height: 32px;
+    line-height: 32px;
+    text-align: center;
+    border: 1px solid rgb(194, 194, 194);
+    border-radius: 17px;
+    font-size: 12px;
+}
+
+#login {
+    display: inline-block;
+    position: absolute;
+    top: 27px;
+    right: 70px;
+    font-size: 12px;
+}
+
+/* 头部红色部分 */
+
+.box-subnav {
+    display: block;
+    position: relative;
+    width: 100%;
+    height: 35px;
+    background: rgb(194, 12, 12);
+}
+
+.subnav {
+    position: relative;
+    margin: 0 auto;
+    width: 1100px;
+    padding-left: 186px;
+}
+
+.subnav-first {
+    display: inline-block;
+    margin: 7px 17px;
+    padding: 2px 13px;
+    font-size: 12px;
+    color: #fff;
+}
+
+.subnav-first-s {
+    background: rgb(160, 9, 9);
+    border-radius: 9px;
+}
+
+.triangle {
+    position: absolute;
+    top: -14px;
+    left: 219px;
+    width: 0;
+    height: 0;
+    border: 7px solid transparent;
+    border-bottom: 7px solid rgb(194, 12, 12);
+}
+
+.occu {
+    width: 100%;
+    height: 105px;
+}
+
+footer {
+    width: 100%;
+    margin-top: 50px;
+    background: rgb(36, 36, 36);
+}
+footer .w a:hover {
+    color: #ddd;
+}
+
+footer .btu {
+    text-align: center;
+} 
+
+footer button {
+    width: 276px;
+    height: 89px;
+    margin: 10px auto;
+    font-size: 40px;
+    color: #fff;
+    background: rgb(194, 12, 12);
+    border-radius: 30px;
+    outline: none;
+}
+
+.footer-pic-son{
+    display: inline-block;
+    width: 90px;
+    height: 100px;
+    margin: 20px 50px;
+    padding-top: 95px;
+    font-size: 13px;
+    text-align: center;
+    color: #fff;
+    background: url(../images/base/foot_enter_new.png);
+}
+.footer-pic-son1{
+    background-position: 100% 91%;
+}
+
+.footer-pic-son2 {
+    background-position: 100% 10%;
+}
+
+.footer-pic-son3 {
+    background-position: 0 0;
+}
+
+.footer-pic-son4 {
+    background-position: 100% 20%;
+}
+
+.footer-pic-son5 {
+    background-position: 0 20%;
+}
+
+/* 条款 */
+.clause {
+    margin: 30px 0;
+    font-size: 14px;
+    text-align: center;
+    color: rgb(153, 153, 153);
+}
+
+.clause a {
+    display: inline-block;
+    margin: 0 30px;
+}
+
+.msg {
+    color: #eee;
+    font-size: 13px;
+    text-align: center;
+}
+
+/* 底部播放器 */
+.box-play {
+    position: fixed;
+    /* bottom: 0; */
+    bottom: -45px;
+    width: 100%;
+    height: 50px;
+    color: #fff;
+    background: rgb(194, 12, 12);
+}
+.play div {
+    display: inline-block;
+}
+
+#Bplay {
+    width: 30px;
+    height: 30px;
+    margin: 10px 0 0 0;
+    background: url(../images/base/playbar.png);
+    background-position: 0 -129px;
+    border: none;
+    outline: none;
+}
+
+#play {
+    appearance: none;
+    width: 34px;
+    height: 37px;
+    margin: 5px 0 0 0;
+    background: url(../images/base/playbar.png);
+    background-position: 0 -202px;
+    border: none;
+    outline: none;
+}
+
+#Nplay {
+    width: 30px;
+    height: 30px;
+    margin: 10px 0 0 0;
+    background: url(../images/base/playbar.png);
+    background-position: -77px -129px;
+    border: none;
+    outline: none;
+}
+
+.play-pic {
+    width: 35px;
+    height: 35px;
+    margin-left: 15px;
+    background: url(../images/base/default_album.jpg);
+    background-size: 100%;
+}
+
+#play-song {
+    font-size: 13px;
+    margin: 0 10px;
+}
+
+#play-singer {
+    font-size: 12px;
+    color: #eee;
+    margin: 0 5px;
+}
+
+.play .progress-bar {
+    display: block;
+    position: relative;
+    width: 500px;
+    height: 8px;
+    margin: 6px 10px;
+    background: rgb(36, 36, 36);
+    border-radius: 4px;
+    /* overflow: hidden; */
+}
+
+#bar-white {
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    /* display: inline-block; */
+    width: 100px;
+    height: 100%;
+    background: #eee;
+    border-radius: 4px;
+}
+
+#bar-white span{
+    position: absolute;
+    top: -6px;
+    right: -5px;
+    width: 20px;
+    height: 20px;
+    background: url(../images/base/iconall.png);
+    background-position: -3px -251px
+}
+
+.bar-time {
+    margin-bottom: 20px;
+    vertical-align: middle;
+}
+
+#play-time {
+    font-size: 10px;
+    color: #eee;
+}
+
+#song-time {
+    font-size: 11px;
+    color: #ddd;
+}
+
+#collect,
+#void-set,
+.play-set,
+.play-list {
+    width: 25px;
+    height: 25px;
+    margin: 0 10px;
+    background: url(../images/base/playbar.png);
+    background-position: 0 0;
+}
+
+#collect {
+    background-position: 61px 424px;
+}
+
+/* 声音设置 */
+#void-set {
+    background-position: 120px 367px;
+}
+
+/* 播放设置 */
+.play-set {
+    background-position: 56px 367px;
+}
+
+/* 播放列表 */
+.play-list {
+    background: url(../images/base/foot_enter_new.png);
+    background-position: -33px -84px;
+    background-size: 58px;
+}
+
+/* 右下角浮标 */
+
+.br {
+    position: fixed;
+    bottom: 60px;
+    right: 200px;
+    padding: 5px;
+}
+
+.br div {
+    width: 30px;
+    height: 30px;
+    margin: 10px 0;
+    border-radius: 5px;
+    cursor: pointer;
+    border: 1px solid rgb(194, 12, 12);  
+}
+
+.back-top {
+  font-family: 'icomoon';
+  font-size: 28px;
+  color: red;
+}
+
+.theme {
+    background: rgb(36, 36, 36);
+}
+
+.client {
+    background: url(../images/base/favicon\ \(1\).ico) rgb(194, 12, 12);
+    background-size: contain;
+}

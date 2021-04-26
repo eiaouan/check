@@ -1,0 +1,68 @@
+/* 初始化 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* 清除浮动 */
+.clearfix::before,
+.clearfix::after {
+content: "";
+display: table;
+}
+
+.clearfix:after {
+    clear: both;
+}
+
+/* 超链接样式 */
+a {
+    color: rgb(218, 25, 25);
+    text-decoration: none;
+}
+
+ul {
+    list-style: none;
+    letter-spacing: -5px;
+}
+li {
+    letter-spacing: normal;
+}
+
+/* 表单初始化 */
+input {
+    border:0;
+    box-sizing: border-box;
+}
+
+a {
+    color: inherit;
+}
+
+span {
+    margin: 0;
+    padding: 0;
+}
+
+.clearfix :after {
+    ctent: "";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+
+
+.clearfix {/*IE6,7专有*/
+    *zoom: 1;
+}
+
+.w {
+    width: 980px;
+    margin: 0 auto;
+}
+
+.w a:hover {
+    color: rgb(236, 65, 65);
+}
