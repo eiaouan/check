@@ -3,14 +3,15 @@
     position: relative;
     width: 100%;
     height: 380px;
-    background: url(../images/scroll/109951165908393576.jpg) no-repeat;
+    /* background: url(../images/scroll/109951165908393576.jpg) no-repeat; */
     background-size: 100%;
+    transition: all 0.2s;
 }
 
 .scroll {
     position: relative;
     height: 380px;
-    background: url(../images/scroll/109951165908393576\ \(1\).jpg) no-repeat;
+    /* background: url(../images/scroll/109951165908393576\ \(1\).jpg) no-repeat; */
     background-size: contain;
 }
 
@@ -19,6 +20,7 @@
     top: 0;
     width: 100%;
     height: 100%;
+    transition: all 0.2s;
 }
 
 .rec-pic img {
@@ -33,6 +35,7 @@
     font-family: 'icomoon';
     font-size: 50px;
     color: #fff;
+    cursor: pointer;
 }
 
 .arrow-r {
@@ -42,12 +45,14 @@
     font-family: 'icomoon';
     font-size: 50px;
     color: #fff;
+    cursor: pointer;
 }
 
 .box-scr-dot {
     position: absolute;
     bottom: 5%;
     left: 35%;
+    cursor: pointer;
 }
 
 .box-scr-dot li {
