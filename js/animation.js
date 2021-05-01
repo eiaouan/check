@@ -106,6 +106,7 @@ function scroll() {
     })
 }
 
+// 回到顶部
 function gotop() {
     var backTop = document.querySelector('.back-top');
     backTop.addEventListener('click', function () {
@@ -122,10 +123,29 @@ function gotop() {
         },30);
     })
 }
-gotop();
+
+// 播放列表
+function changListDisplay(){
+    var listButton = document.querySelector('.play-list');
+    var ul = document.querySelector('.song-list');
+    listButton.addEventListener('click',function(){
+        if(!ul.style.display == 'none'){
+            ul.style.display = 'none';
+        }else{
+            ul.style.display = 'inline-block';
+        }
+    })
+    ul.addEventListener('mouseleave',function(){
+        ul.style.display = 'none';
+    })
+}
+
+// 搜索下拉框
 
 
 // 调用函数
 scroll();
+gotop();
+changListDisplay();
 
 

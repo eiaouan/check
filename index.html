@@ -168,85 +168,25 @@
             <h2>新碟上架</h2>
         </div>
         <div class="shelves w">
-            <div class="she-arrow-l"><a href="#"></a></div>
-        <div class="she-arrow-r"><a href="#"></a></div>
+            <!-- <div class="she-arrow-l"><a href="#"></a></div> -->
+        <!-- <div class="she-arrow-r"><a href="#"></a></div> -->
             <ul>
-                <li class="shelves-disc">
-                    <a href="">
-                        <img src="images/occupy/109951165875486814.jpg" alt="">
-                    </a>
-                    <p><a title="" href="" class="she-disc-name">Fearless (Taylor's Version)</a></p>
-                    <p><a href="" class="she-disc-singer">Taylor Swift</a></p>
-                </li>
-                <li class="shelves-disc">
-                    <a href="">
-                        <img src="images/occupy/109951165875486814.jpg" alt="">
-                    </a>
-                    <p><a title="" href="" class="she-disc-name">Fearless (Taylor's Version)</a></p>
-                    <p><a href="" class="she-disc-singer">Taylor Swift</a></p>
-                </li><li class="shelves-disc">
-                    <a href="">
-                        <img src="images/occupy/109951165875486814.jpg" alt="">
-                    </a>
-                    <p><a title="" href="" class="she-disc-name">Fearless (Taylor's Version)</a></p>
-                    <p><a href="" class="she-disc-singer">Taylor Swift</a></p>
-                </li><li class="shelves-disc">
-                    <a href="">
-                        <img src="images/occupy/109951165875486814.jpg" alt="">
-                    </a>
-                    <p><a title="" href="" class="she-disc-name">Fearless (Taylor's Version)</a></p>
-                    <p><a href="" class="she-disc-singer">Taylor Swift</a></p>
-                </li>
-
             </ul>
         </div>
     </div>
+    <!-- 热门歌手 -->
     <div class="box-singer">
-        <div class="singer-title"><h2>入驻歌手</h2></div>
+        <div class="singer-title"><h2>热门歌手</h2></div>
         <div class="b-singer w">
             <ul>
-                <li class="singer">
+                <!-- <li class="singer">
                     <img src="images/occupy/109951162820707114.jpg" alt="">
                     <div class="sin">
                     <p><a href="#" class="sin-name">Find乐团</a></p>
                     <p><a href="#" class="sin-brief">独立音乐人</a></p>
                     </div>
-                </li>
-                <li class="singer">
-                    <img src="images/occupy/109951162820707114.jpg" alt="">
-                    <div class="sin">
-                    <p><a href="#" class="sin-name">Find乐团</a></p>
-                    <p><a href="#" class="sin-brief">独立音乐人</a></p>
-                    </div>
-                </li>
-                <li class="singer">
-                    <img src="images/occupy/109951162820707114.jpg" alt="">
-                    <div class="sin">
-                    <p><a href="#" class="sin-name">Find乐团</a></p>
-                    <p><a href="#" class="sin-brief">独立音乐人</a></p>
-                    </div>
-                </li>
-                <li class="singer">
-                    <img src="images/occupy/109951162820707114.jpg" alt="">
-                    <div class="sin">
-                    <p><a href="#" class="sin-name">Find乐团</a></p>
-                    <p><a href="#" class="sin-brief">独立音乐人</a></p>
-                    </div>
-                </li>
-                <li class="singer">
-                    <img src="images/occupy/109951162820707114.jpg" alt="">
-                    <div class="sin">
-                    <p><a href="#" class="sin-name">Find乐团</a></p>
-                    <p><a href="#" class="sin-brief">独立音乐人</a></p>
-                    </div>
-                </li>
-                <li class="singer">
-                    <img src="images/occupy/109951162820707114.jpg" alt="">
-                    <div class="sin">
-                    <p><a href="#" class="sin-name">Find乐团</a></p>
-                    <p><a href="#" class="sin-brief">独立音乐人</a></p>
-                    </div>
-                </li>
+                </li> -->
+                
             </ul>
         </div>
     </div>
@@ -424,7 +364,11 @@
     </footer>
     <!-- 播放器 -->
     <div class="box-play">
-        <div class="play w">
+        <div class="b-play w">
+            <audio src="https://music.163.com/song/media/outer/url?id=1837817804.mp3" id="bar-song" preload="auto">
+                <source src="" type="audio/ogg">
+                <source  type="audio/mpeg">
+            </audio>
             <!-- 播放暂停 -->
             <button id="Bplay"></button>
             <!-- 上一首 -->
@@ -445,25 +389,29 @@
                 </div>
             </div>
             <div class="bar-time">
-                <div id="play-time">1:00&nbsp;/</div>
-                <div id="song-time">4:05</div>
+                <div id="play-time">00:00&nbsp;/</div>
+                <div id="song-time">00:00</div>
             </div>
             <div id="collect"></div>
             <div id="void-set"></div>
             <div class="play-set"></div>
-            <div class="play-list"></div>
+            <div class="play-list">
+                <ul class="song-list">
+                    
+                </ul>
+            </div>
         </div>
     </div>
-    <!-- <audio src="https://music.163.com/album?id=33894312" id="bar-song"></audio> -->
-    <audio src="example.mp3" id="bar-song"></audio>
     <!-- 右下角浮标 -->
         <div class="br">
             <div class="back-top" title="回到顶部"></div>
             <div class="theme" title="更换主题"></div>
             <div class="client" title="下载客户端"></div>
         </div>
-    <script type="text/javascript" src="js/layout.js" async></script>
-    <script src="js/dynamic.js" type="text/javascript" async='async'></script>
-    <script type="text/javascript" src="js/songplay.js"></script>
+        <script type="text/javascript" src="js/Ajax函数.js"></script>
+        <script type="text/javascript" src="js/layout.js" async></script>
+        <script type="text/javascript" src="js/animation.js" async='async'></script>
+        <script type="text/javascript" src="js/songplay.js"></script>
+        <script type="text/javascript" src="js/dyamic.js"></script>
 </body>
 </html>

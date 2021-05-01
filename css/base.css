@@ -20,6 +20,7 @@ display: table;
 a {
     color: rgb(218, 25, 25);
     text-decoration: none;
+    cursor: pointer;
 }
 
 ul {
