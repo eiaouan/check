@@ -140,12 +140,86 @@ function changListDisplay(){
     })
 }
 
+
+// 榜单动画
+var rank = document.querySelectorAll('.rank');
+rank.forEach(e => {
+    e.addEventListener('mouseover' ,function(){
+        // 修改其他元素的样式
+        rank.forEach(f => {
+            if(f.classList.contains('rank-on')){
+                f.classList.remove('rank-on')
+            }
+        })
+        e.classList.add ('rank-on');
+    })
+});
+
 // 搜索下拉框
+function getSearchRelative() {
+    // oninput
+    let rs = document.querySelector('.relative-search');  // 提示框
+    let input = document.querySelector('#index-sea');   // 搜索框
+    let timer = null;       // 用定时器设置防抖
+    input.addEventListener('input', function () {      // 输入事件
+        let value = document.querySelector('#index-sea').value;
+        if (timer) {
+            clearTimeout(timer);
+        }
+        timer = setTimeout(() => {
+            let inf = {
+                type: 'get',
+                url: 'https://autumnfish.cn/search/suggest',
+                date: {
+                    keywords: value
+                },
+                success: function (date) {
+                    rs.style.display = 'block';
+                    let boxA = document.querySelectorAll('.rs-m');
+                    for (e of boxA) {
+                        let t = e.getAttribute('type'); // 存放结果类型
+                        if (date.result.order.includes(t)) {  // 如果存在该类型的值，显示该类型的框，没有则不显示
+                            e.style.display = 'block';
+                            // date.result[t] 各类型的内容  
+                            let ul = e.querySelector('ul');     // 各类型下的ul
+                            for (let i = 0; i < date.result[t].length; i++) {  // 循环添加li
+                                let li = document.createElement('li');
+                                li.innerHTML = date.result[t][i].name;
+                                ul.appendChild(li);
+                            }
+                        } else {
+                            e.style.display = 'none';
+                        }
+                    }
+                },
+                error: function () {
+                    rs.style.display = 'none';
+                }
+            }
+            if (value) {  // 如果value为空就不发送请求
+                ajax(inf);
+            } else {
+                let ul = document.querySelectorAll('.rs-m ul')
+                ul.forEach(e => {
+                    e.innerHTML = '';
+                });
+                rs.style.display = 'none';
+            }
+            timer = null;
+        }, 500);
+    })
+
+    input.addEventListener('blur', function () {       // 增加一个失去焦点事件
+        rs.style.display = 'none';
+    })
+}
+
+
 
 
 // 调用函数
 scroll();
 gotop();
 changListDisplay();
-
+getSearchRelative();
 

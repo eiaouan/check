@@ -121,13 +121,39 @@
     border: 1px solid rgb(194, 12, 12);
     border-radius: 5px;
     background: #eee;
+    overflow: hidden;
+}
+
+.b-shelves {
+    display: block;
+    position: relative;
+    width: 5900px;
+}
+
+.b-shelves ul {
+    display: inline-block;
 }
 
 .shelves-disc {
+    position: relative;
     display: inline-block;
-    width: 25%;
+    width: 244px;
     padding: 20px 20px;
+    vertical-align: top;
 }
+
+.shelves-disc .msk {
+    display: inline-block;
+    position: absolute;
+    top: 20px;
+    left: 17px;
+    width: 85%;
+    height: 154px;
+    background: url(https://s2.music.126.net/style/web2/img/coverall.png?d2a919b…);
+    background-size: 335px;
+    background-position: 0% -38%;
+}
+
 
 /* .shelves-disc>a {
     width: 100%;
@@ -139,6 +165,7 @@
 } */
 
 .shelves-disc img {
+    padding: 0px 33px 12px 0px;
     width: 88%;
     /* opacity: 0; */
 }
@@ -159,6 +186,8 @@
     font-family: 'icomoon';
     font-size: 50px;
     color: #fff;
+    cursor: pointer;
+    z-index: 1;
 }
 
 .she-arrow-r {
@@ -168,27 +197,41 @@
     font-family: 'icomoon';
     font-size: 50px;
     color: #fff;
+    cursor: pointer;
+    z-index: 1;
+}
+
+/* 热门歌手 */
+
+.b-singer ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
 }
 
 .singer {
     display: inline-block;
-    width: 300px;
-    margin: 40px;
-    color: #fff;
-    background: rgba(36, 36, 36);
-    border-radius: 50px;
+    width: 145px;
+    height: 213px;
+    margin: 25px;
+    color: #000;
+    /* border-radius: 80px; */
     overflow: hidden;
 }
 
 .singer img {
     display: inline-block;
-    width: 30%;
+    width: 145px;
+    height: 145px;
+    border-radius: 80px;
+    overflow: hidden;
 }
 
 .sin {
-    display: inline-block;
-    margin: 30px 0 0 15px;
-    vertical-align: top;
+    display: block;
+    text-align: center;
+    /* margin: 30px 0 0 15px; */
+    /* vertical-align: top; */
 }
 
 .sin p {
@@ -207,33 +250,54 @@
     width: 25%;
     margin-top: 50px;
     color: #fff;
-    background: rgb(87, 143, 221);
+    background: url(../images/base/music-rank-bg1.png);
 }
 
 .new-rank {
     width: 25%;
     margin-top: 50px;
     color: #fff;
-    background: rgb(70, 179, 185);
+    background: url(../images/base/music-rank-bg2.png);
+
 }
 
 .ori-rank {
     width: 25%;
     margin-top: 50px;
     color: #fff;
-    background: rgb(196, 74, 107);
+    background: url(../images/base/music-rank-bg3.png);
 }
 
 .rank-top {
     width: 100%;
+    margin: 20px 0;
     text-align: center;
 }
 
 .rank {
-    padding: 40px 20px;
-    /* border-bottom: 2px solid rgb(194, 12, 12) ; */
+    position: relative;
+    height: 45px;
+    line-height: 45px;
 }
 
-.rank p {
-    margin: 20px 0 0 10px;
+.rank-num {
+    margin: 15px 0;
+    font-weight: 700;
+    font-size: 18px;
+}
+
+.rank .singer-name {
+    position: absolute;
+    right: 10px;
+}
+
+.rank-even {
+    background-color: hsla(0,0%,96%,.15);
+}
+
+.rank-on {
+    position: relative;
+    height: 90px;
+    line-height: 90px;
+    /* padding: 5px 100px; */
 }

@@ -61,9 +61,17 @@ span {
 
 .w {
     width: 980px;
+    min-width: 500px;
+    max-width: 980px;
     margin: 0 auto;
 }
 
 .w a:hover {
     color: rgb(236, 65, 65);
+}
+
+.w p {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
