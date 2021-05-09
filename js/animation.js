@@ -148,10 +148,17 @@ rank.forEach(e => {
         // 修改其他元素的样式
         rank.forEach(f => {
             if(f.classList.contains('rank-on')){
+                let fpic = f.querySelector('.rank-pic');
+                f.querySelector('.pic-num').className = 'rank-num';
+                fpic.style.display = 'none';
                 f.classList.remove('rank-on')
             }
         })
+        // 给自己添加样式
         e.classList.add ('rank-on');
+        let pic = e.querySelector('.rank-pic');
+        pic.style.display = 'inline-block';
+        e.querySelector('.rank-num').className ='pic-num';
     })
 });
 

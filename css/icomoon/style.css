@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'icomoon';
-  src:  url('fonts/icomoon.eot?qrezvw');
-  src:  url('fonts/icomoon.eot?qrezvw#iefix') format('embedded-opentype'),
-    url('fonts/icomoon.ttf?qrezvw') format('truetype'),
-    url('fonts/icomoon.woff?qrezvw') format('woff'),
-    url('fonts/icomoon.svg?qrezvw#icomoon') format('svg');
+  src:  url('fonts/icomoon.eot?n3nbc8');
+  src:  url('fonts/icomoon.eot?n3nbc8#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.ttf?n3nbc8') format('truetype'),
+    url('fonts/icomoon.woff?n3nbc8') format('woff'),
+    url('fonts/icomoon.svg?n3nbc8#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -25,11 +25,41 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-plus-square-o:before {
-  content: "\e908";
+.icon-media-eject-outline:before {
+  content: "\e909";
 }
-.icon-qq:before {
-  content: "\e903";
+.icon-media-fast-forward-outline:before {
+  content: "\e90a";
+}
+.icon-media-play-outline:before {
+  content: "\e90b";
+}
+.icon-media-record-outline:before {
+  content: "\e90c";
+}
+.icon-media-rewind-outline:before {
+  content: "\e90d";
+}
+.icon-media-stop-outline:before {
+  content: "\e90e";
+}
+.icon-media-fast-forward:before {
+  content: "\e910";
+}
+.icon-media-play:before {
+  content: "\e911";
+}
+.icon-media-record:before {
+  content: "\e912";
+}
+.icon-media-stop:before {
+  content: "\e913";
+}
+.icon-media-rewind:before {
+  content: "\e914";
+}
+.icon-media-pause:before {
+  content: "\e915";
 }
 .icon-camera1:before {
   content: "\e907";
@@ -46,8 +76,17 @@
 .icon-keyboard_arrow_down:before {
   content: "\e905";
 }
-.icon-cart:before {
-  content: "\e906";
+.icon-volume:before {
+  content: "\e916";
+}
+.icon-volume1:before {
+  content: "\e917";
+}
+.icon-pause:before {
+  content: "\e918";
+}
+.icon-play:before {
+  content: "\e919";
 }
 .icon-home:before {
   content: "\e900";
@@ -61,6 +100,18 @@
 .icon-search:before {
   content: "\e986";
 }
+.icon-play2:before {
+  content: "\ea15";
+}
 .icon-ctrl:before {
   content: "\ea50";
+}
+.icon-plus-square-o:before {
+  content: "\e908";
+}
+.icon-qq:before {
+  content: "\e903";
+}
+.icon-cart:before {
+  content: "\e906";
 }

@@ -207,12 +207,92 @@
     font-size: 12px;
 }
 
-#login {
+.top-login {
     display: inline-block;
     position: absolute;
-    top: 27px;
-    right: 70px;
+    top: 20px;
+    right: 40px;
     font-size: 12px;
+    text-align: center;    
+}
+
+#login {
+    display: inline-block;
+    width: 30px;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+/* 头像 */
+.person-head {
+    position: absolute;
+    top: 0;
+    right: 15px;
+    width: 30px;
+    height: 30px;
+    background: url(../images/base/109951165647004069.jpg) no-repeat;
+    border-radius: 50%;
+}
+
+/* 个人菜单 */
+
+.personal-menu {
+    position: absolute;
+    top: 37px;
+    left: -37px;
+    width: 150px;
+    text-align: left;
+    color: #ccc;
+    background: rgb(36,36,36);
+    z-index: 2;
+}
+
+.personal-menu li {
+    height: 34px;
+    line-height: 34px;
+    padding-left: 30px;
+}
+
+.personal-menu li:hover {
+    background: rgb(53, 53, 53);
+}
+
+.top-ico {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    margin: 7px 10px 0 0;
+    background: url(../images/base/toplist.png);
+}
+
+/* 对应图标 */
+.top-ico-1 {
+    background-position: 0 -80px;
+}
+
+.top-ico-2{
+    background-position: -20px -120px;
+}
+
+.top-ico-3{
+    background-position: 0 -100px;
+}
+
+.top-ico-4{
+    background-position: 0 -221px;
+}
+
+.top-ico-5{
+    background-position: 0 -140px;
+}
+
+.top-ico-6{
+    background-position: -20px -142px;
+}
+
+.top-ico-7{
+    background-position: 0 -200px;
 }
 
 /* 头部红色部分 */
@@ -558,18 +638,22 @@ footer button {
 /* 登录 */
 
 
-/* 选择登录选项 */
-.b-login-1,
-.b-login-2 {
+
+.login-main {
     display: block;
     /* display: none; */
     position: absolute;
-    top: 50%;
-    left: 50%;
+    top: 23%;
+    left: 26%;
     width: 530px;
     height: 372px;
-    margin-top: -186px;
-	margin-left: -265px;
+    
+}
+
+/* 选择登录选项 */
+.b-login-1,
+.b-login-2 {
+    width: 100%;
     background: #fff;
     box-shadow: 1px 1px 5px #777 ;
     border-radius: 5px;
@@ -584,10 +668,11 @@ footer button {
     padding: 0 25px;
     color: #fff;
     background: rgb(36,36,36);
+    cursor: move;
 }
 
 .log-1-m {
-    padding: 40px 0;
+    padding: 30px 0;
 }
 
 .log-l {
@@ -738,7 +823,7 @@ footer button {
     margin: 20px auto;
 }
 
-#phone,
+#account,
 #password,
 #log-btn {
     width: 100%;
