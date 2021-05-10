@@ -22,7 +22,11 @@
 
 .scroll {
     position: relative;
-    height: 380px;
+    height: 380px;  
+    width: 980px;
+    min-width: 500px;
+    max-width: 980px;
+    margin: 0 auto;
     /* background: url(../images/scroll/109951165908393576\ \(1\).jpg) no-repeat; */
     background-size: contain;
 }
@@ -116,7 +120,7 @@
     position: relative;
     width: 160px;
     /* height: 160px; */
-    margin: 30px;
+    margin: 7px;
     overflow: hidden;
     text-overflow: ellipsis;
     word-break: break-word;
@@ -163,7 +167,7 @@
 .hot-list {
     position: absolute;
     left: 5%;
-    top: 40%;
+    top: 28%;
     color: #ddd;
 }
 
@@ -185,12 +189,12 @@
 /* 播放次数 */
 .plays {
     position: absolute;
-    bottom: 0;
+    right: 0;
     height: 25px;
     padding-left: 10px;
     line-height: 25px;
     font-size: 12px;
-    color: #ddd;
+    color: #fff;
 }
 
 .plays::before {
@@ -343,14 +347,14 @@
 }
 
 .up-rank {
-    width: 25%;
+    width: 30%;
     margin-top: 50px;
     color: #fff;
     background: url(../images/base/music-rank-bg1.png);
 }
 
 .new-rank {
-    width: 25%;
+    width: 30%;
     margin-top: 50px;
     color: #fff;
     background: url(../images/base/music-rank-bg2.png);
@@ -358,16 +362,30 @@
 }
 
 .ori-rank {
-    width: 25%;
+    width: 30%;
     margin-top: 50px;
     color: #fff;
     background: url(../images/base/music-rank-bg3.png);
 }
 
 .rank-top {
+    position: relative;
     width: 100%;
     margin: 20px 0;
-    text-align: center;
+    padding: 0 15px;
+    /* text-align: center; */
+}
+
+.rank-top h2 {
+    display: inline-block;
+}
+
+.rank-top span {
+    float: right;
+    margin: 0 10px;
+    font-family: 'icomoon';
+    font-size: 33px;
+    cursor: pointer;
 }
 
 .rank {
@@ -375,6 +393,19 @@
     height: 45px;
     line-height: 45px;
     vertical-align: middle;
+}
+
+.rank a {
+    display: inline-block;  
+    width: 120px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 14px;
+}
+
+.singer-name a {
+    width: 80px;
 }
 
 .rank-no1 {
@@ -387,9 +418,9 @@
     position: relative;
     width: 90px;
     height: 90px;
-    background: url(../images/occupy/109951162820707114.jpg);
+    background: url(../images/base/favicon\ \(1\).ico);
     background-size: contain;
-    vertical-align: middle;
+    vertical-align: top;
 }
 
 .pic-num {
@@ -404,12 +435,14 @@
     text-align: center;
     font-size: 20px;
     z-index: 1;
+    vertical-align: top;
 }
 
 .rank-num {
     margin: 15px 0;
     font-weight: 700;
     font-size: 18px;
+    vertical-align: top;
 }
 
 .rank .singer-name {
@@ -431,6 +464,7 @@
 
 .rank:hover .rank-ico {
     display: inline-block;
+    vertical-align: top;
 }
 
 .rank-ico span:hover {
@@ -440,7 +474,8 @@
 
 .rank-ico {
     display: none;
-    margin-left: 5px;
+    /* margin-left: 5px; */
+    padding-right: 15px;
     font-family: 'icomoon';
     font-size: 20px;
     color: rgb(245, 241, 241);

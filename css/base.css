@@ -46,8 +46,8 @@ span {
     padding: 0;
 }
 
-.clearfix :after {
-    ctent: "";
+.clearfix::after {
+    content: "";
     display: block;
     height: 0;
     clear: both;
@@ -57,6 +57,14 @@ span {
 
 .clearfix {/*IE6,7专有*/
     *zoom: 1;
+}
+
+
+/* 大布局 */
+
+.main {
+    width: 1200px;
+    margin: 0 auto;
 }
 
 .w {
@@ -75,3 +83,29 @@ span {
     text-overflow: ellipsis;
     white-space: nowrap;
 }
+
+.lw {
+    float: left;
+    width: 980px;
+    min-width: 500px;
+    max-width: 980px;
+    margin: 0 auto;
+}
+
+.lw a:hover {
+    color: rgb(236, 65, 65);
+}
+
+.lw p {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.rw {
+    float: right;
+    width: 200px;
+    height: 200px;
+    margin: 90px 0;
+}
+

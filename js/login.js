@@ -152,8 +152,6 @@ confirm.addEventListener('click',function(){
 
 
 // 登录盒子随着鼠标移动
-
-
 function dragMove(son, father) {
     son.addEventListener('mousedown', function (e) {
         let x = e.pageX - father.offsetLeft
@@ -184,3 +182,4 @@ function dragMove(son, father) {
 }
 
 dragMove(logTop[0],main);
+dragMove(logTop[1],main)
