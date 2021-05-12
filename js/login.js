@@ -44,6 +44,7 @@ addressBtn.addEventListener('click',function(){
     enterLog2 ();
 })
 
+// 进入第二个登录页面
 function enterLog2 () {
     let t = getPolicyAgree ();
     if(t){
@@ -70,9 +71,7 @@ function getPolicyAgree () {
 }
 
 // 返回登录选项
-
 let method = document.querySelector('.log-2-method');
-
 method.addEventListener('click',function(){
     log1.style.display = 'block';
     log2.style.display = 'none';
@@ -80,7 +79,7 @@ method.addEventListener('click',function(){
 
 
 
-// 手机登录
+// 手机/邮箱登录
 function login(obj) {
     let numValue = document.querySelector('#account').value;
     let passValue = document.querySelector('#password').value;
@@ -109,11 +108,15 @@ function login(obj) {
         success : function(date){
             box.style.display = 'none';
             alert('登录成功');
+            // console.log(date);
+            addCookie(date);
+            console.log(cookie,document.cookie);
+
         },
         error : function(date){
             span.innerHTML = date.msg;
             err.style.display = 'block';
-            console.log(date.code);
+            console.log(date.token);
         }
     }
     ajax(login);
@@ -182,4 +185,57 @@ function dragMove(son, father) {
 }
 
 dragMove(logTop[0],main);
-dragMove(logTop[1],main)
+dragMove(logTop[1],main);
+
+
+// 登录成功后
+function addCookie(da){  // 传入登录成功后返回的数据，cookie，token
+console.log(document.cookie);
+    let cookie = da.cookie;
+    let token =da.token;
+    document.cookie = cookie;
+    // document.token =token
+    console.log(document.cookie);
+}
+
+// 发送一个请求  
+function text(token){
+    // (function(){
+
+    let tdetail = {
+        type : 'get',
+        url : 'https://autumnfish.cn/hot/topic',
+        date : {
+            limit : 6,
+            offset : 6,
+        },
+        header : {
+            token : token,
+        },
+        success : function(d){
+            console.log(d);
+        },
+        error : function(d){
+            console.log(d);
+        }
+    }
+    ajax(tdetail);
+// })();s
+
+}
+// 获取cookie值的函数
+function getCookie(cname)
+{
+  var name = cname + "=";
+  var ca = document.cookie.split(';');
+  console.log(ca);
+  for(var i=0; i<ca.length; i++) 
+  {
+    var c = ca[i].trim();
+    console.log(c.substring(name.length,c.length));
+    if (c.indexOf(name)==0) return c.substring(name.length,c.length);
+  }
+  return "";
+}
+
+console.log(getCookie('_remember_me'));

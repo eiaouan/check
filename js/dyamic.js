@@ -301,59 +301,157 @@ rankBox.addEventListener('click',function(ev) {
 // 获取搜索结果 并且转跳页面
 (function(){
     let input = document.querySelector('#index-sea');
+    let value = null;
     input.addEventListener('keydown',function(ev){
-        console.log('keyd');
         if(ev.keyCode == 13){
-            let value = this.value;
-            let det = {     // ajax参数对象
-                type : 'get',
-                url : 'https://autumnfish.cn/search',
-                date : {
-                    keywords : value,
-                    limit : 15,
-                    type : 1
-                },
-                success : function(d){
-                    console.log(d);
-                    // 动态将搜索内容写入
-                    let ul = document.querySelector('.s-res ul');
-                    console.log(ul);
-                    let songs = d.result.songs;
-                    for(let i = 0;i<songs.length;i++){
-                        let art = null;
-                        for(let j=0;j<songs.artists.length;i++){
-                            art += songs.artists +' ';
-                        }
-                        let dSecond = Math.floor((songs[i].duration/1000) % 60); // 歌曲时间长度的秒数
-                        if (dSecond < 10) {
-                            dSecond = '0' + dSecond;
-                        }
-                        let leng = Math.floor((songs[i].duration/1000) / 60) + ':' + dSecond;  /// 歌曲时间的表示
-                        let alb = songs[i].album.name;
-                        let str = '<li sId="' + songs[i].id + '">' 
-                        +'<span class="s-name">' + songs[i].name + '</span>'
-                        +'<div class="s-ico">'
-                            +'<span class="s-play"></span>'
-                            +'<span class="s-add"></span>'
-                        +'</div>'
-                        +'<span class="s-art">'+ art +'</span>'
-                        + '<span class="s-alu">'+ alb +'</span>'
-                        + '<span class="s-leng">'+ leng +'</span>'
-                    +'</li>'
-                        ul.insertAdjacentHTML('beforeend',str);
-                    }
-                },
-                error : function(d){
-                    console.log(d);
-                }
-                
-            }
-            ajax(det);
-            
-            location.hash = '#/search';
+        value = this.value;
+        sendSearchRequest(value,1,LoadpageNum); // 发送搜索结果请求，offset默认为0，并且改变锚点
         }
-    }) 
+    })
 })();
 
 
- 
+function sendSearchRequest(value,page,callBack){
+    console.log(page);
+    const limit = 15;
+    let offset = limit*(page-1); // 计算偏移量
+    let det = {     // ajax参数对象
+        type: 'get',
+        url: 'https://autumnfish.cn/search',
+        date: {
+            keywords: value,
+            limit: limit,
+            type: 1,
+            offset: offset, // 分页
+        },
+        success: function (d) {
+            console.log(d,offset);
+            loadSearchSongs(d, value);
+            callBack&&callBack(d.result.songCount, limit,value);
+        },
+        error: function (d) {
+            console.log(d);
+        }
+
+    }
+    ajax(det);
+    location.hash = '#/search';
+}
+
+
+
+
+function loadSearchSongs(d,value) {     // 重载页面
+    let inp = document.querySelector('#s-inp');
+    inp.value = value
+    // 动态将搜索内容写入
+    let ul = document.querySelector('.s-res ul');
+    ul.innerHTML = '';
+    let songs = d.result.songs;
+    for (let i = 0; i < songs.length; i++) {
+        let art = '';
+        for (let j = 0; j < songs[i].artists.length; j++) {
+            art += songs[i].artists[j].name + ' ';
+        }
+        let dSecond = Math.floor((songs[i].duration / 1000) % 60); // 歌曲时间长度的秒数
+        if (dSecond < 10) {
+            dSecond = '0' + dSecond;
+        }
+        let leng = Math.floor((songs[i].duration / 1000) / 60) + ':' + dSecond;  /// 歌曲时间的表示
+        let alb = songs[i].album.name;
+        let cl = 's-res-odd';
+        if (i % 2 == 1) {
+            cl = 's-res-even'
+        }
+        let str = '<li sId="' + songs[i].id + '" ' + 'class=' + cl + '>'
+            + '<span class="s-name">' + songs[i].name + '</span>'
+            + '<div class="s-ico">'
+            + '<span class="s-play"></span>'
+            + '<span class="s-add"></span>'
+            + '</div>'
+            + '<span class="s-art">' + art + '</span>'
+            + '<span class="s-alu">' + alb + '</span>'
+            + '<span class="s-leng">' + leng + '</span>'
+            + '</li>'
+        ul.insertAdjacentHTML('beforeend', str);
+    }
+    gotop();
+}
+
+// 加载分页数目
+function LoadpageNum(Scount,limit,value){  // 参数：歌曲数目,一个页面内显示的数量
+    console.log('loadnum');
+    let paB = document.querySelector('.pa-count') // 装数字的盒子
+    let pcount = Math.ceil(Scount/limit); // 取大于Scount/limit的最小整数
+    // 初始化paB的内容
+    paB.innerHTML = '<a href="#" class="pa-on">1</a>';
+    if(pcount>7){
+        for(let i=2;i<7;i++){ // 加载默认显示,页数大于7
+            let a = document.createElement('a');
+            a.innerHTML = i;
+            paB.appendChild(a);
+        }
+        let span = document.createElement('span');
+        span.innerHTML = '...';
+        paB.appendChild(span);
+        let La = document.createElement('a');
+        La.innerHTML = pcount;
+        paB.appendChild(La);
+    }else {
+        for(let i=2;i<=pcount;i++){ // 加载默认显示，页数小于7
+            let a = document.createElement('a');
+            a.innerHTML = i;
+            paB.appendChild(a);
+        }
+    }
+    changeSearchPage(value)
+   
+}
+
+function changeSearchPage(value){
+    let sPage = document.querySelector('.s-page') // 小面一行的盒子
+    let paB = document.querySelector('.pa-count') // 装数字的盒子
+    let numA = paB.querySelectorAll('a'); // 数字
+    let paback = sPage.querySelector('.pa-b') // 上一页
+    let panext = sPage.querySelector('.pa-n') // 下一页
+    console.log(numA);
+     // 事件委托
+     sPage.addEventListener('click',function(ev){
+        let ele = ev.target;
+        // this = ele;
+       let tn = document.querySelector('.pa-on').innerHTML;// 显示的页面号码
+       tn = parseInt(tn);
+    //    判断button是否被禁用
+    if(tn == 1){
+        panext.disabled = true;
+    } else {
+        panext.disabled = false;
+    }
+    if (tn == paB.lastElementChild.innerHTML){
+        paback.disabled = true;
+    }else {
+        paback.disabled = false;
+    }
+    //    判断点击的类型
+        if(ele.tagName == 'A'){  // 如果点击的是数字
+            tn = ele.innerHTML;
+        }else if (ele.className == 'pa-b'){
+                tn -= 1; 
+        }else if (ele.className == 'pa-n'){
+                tn += 1; 
+        }
+        
+        console.log(tn,'for外面');
+        numA.forEach(e=>{
+            console.log('for里面');
+        // for(e of numA){
+            if(e.innerHTML == tn){
+                e.className = 'pa-on'
+            }else{
+                e.className = '';
+            }
+        // }
+        })
+        sendSearchRequest(value,tn) // 重新发送请求并且加载页面
+    })
+}

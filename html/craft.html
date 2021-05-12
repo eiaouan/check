@@ -14,6 +14,7 @@
         <li><a href="#/log?id=1">登录</a></li>
     </ul>
     <div class="view"></div>
+    <button disabled></button>
 <script>
         let view = document.querySelector('.view');
         console.log(view);
@@ -40,7 +41,51 @@
             break;
         }
     }
-    
+    let body = document.querySelector('body')
+    let btn = document.querySelector('button');
+    console.log(body,btn);
+    body.addEventListener('click',function(e){
+        let ele = e.target;
+        console.log(ele);
+        if(e.tagName == 'button'){
+            console.log(succ);
+        }
+    });
+
+    // 创建cookie
+    (function () {
+            function setCookie(cname, cvalue, exdays) {
+                var d = new Date();
+                d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+                var expires = "expires=" + d.toGMTString();
+                document.cookie = cname + "=" + cvalue + "; " + expires;
+                console.log(document.cookie);
+            }
+            function getCookie(cname) {
+                var name = cname + "=";
+                var ca = document.cookie.split(';');
+                for (var i = 0; i < ca.length; i++) {
+                    var c = ca[i].trim();
+                    if (c.indexOf(name) == 0) { return c.substring(name.length, c.length); }
+                }
+                return "";
+            }
+            function checkCookie() {
+                var user = getCookie("username");
+                if (user != "") {
+                    alert("欢迎 " + user + " 再次访问");
+                }
+                else {
+                    user = prompt("请输入你的名字:", "");
+                    if (user != "" && user != null) {
+                        setCookie("username", user, 30);
+                    }
+                }
+            }
+            // setCookie(cname, cvalue, exdays);
+        })()
+        document.cookie  = 'username=Darren'
+        console.log(document.cookie);
 </script>
 </body>
 </html>

@@ -68,8 +68,15 @@
 .s-res li span{
     display: inline-block;
     cursor: pointer;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    vertical-align: middle;
 }
 
+.s-res-odd {
+    background: #ccc;
+}
 
 .s-res-even {
     background: salmon;
@@ -94,20 +101,68 @@
 }
 .s-play,
 .s-add {
-    width: 15px;
-    height: 15px;
+    width: 20px;
+    height: 20px;
     margin: 0 15px;
-    color: #ccc ;
+    color: #fff ;
     font-family: 'icomoon';
     cursor: pointer;
 }
 
+.s-ico span:hover {
+    transform: scale(1.2);
+}
+
+
 .s-art {
     width: 247px;
     text-align: center;
+    font-size: 13px;
 }
 
 .s-alu {
     width: 160px;
+    font-size: 13px;
 }
 
+.s-leng {
+    font-size: 12px;
+}
+
+/* 分按钮 */
+.s-page {
+    width: 500px;
+    height: 30px;
+    line-height: 30px;
+    margin: 20px auto;
+}
+
+.s-page .pa-b,
+.s-page .pa-n {
+    width: 65px;
+    background: #fff;
+    border: none;
+}
+
+.s-page .pa-b:hover,
+.s-page .pa-n:hover {
+    color: rgb(208, 12, 18);
+}
+
+.pa-count {
+    display: inline-block;
+}
+
+.s-page a {
+    display: inline-block;
+    width: 30px;
+    margin: 5px;
+    border: 1px solid #ccc;
+    text-align: center;
+    border-radius: 8px;
+}
+
+.s-page .pa-on {
+    background: salmon;
+    color: #fff;
+}

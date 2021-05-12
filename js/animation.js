@@ -107,21 +107,26 @@ function scroll() {
 }
 
 // 回到顶部
-function gotop() {
+(function () {
     var backTop = document.querySelector('.back-top');
     backTop.addEventListener('click', function () {
-        timer = setInterval(function(){
-            //获取滚动条的滚动高度
-            var osTop = document.documentElement.scrollTop || document.body.scrollTop;
-            //用于设置速度差，产生缓动的效果
-            var speed = Math.floor(-osTop / 6);
-            document.documentElement.scrollTop = document.body.scrollTop = osTop + speed;
-            isTop =true;  //用于阻止滚动事件清除定时器
-            if(osTop == 0){
-                clearInterval(timer);
-            }
-        },30);
+        gotop();
     })
+})();
+    
+
+function gotop(){
+    timer = setInterval(function(){
+        //获取滚动条的滚动高度
+        var osTop = document.documentElement.scrollTop || document.body.scrollTop;
+        //用于设置速度差，产生缓动的效果
+        var speed = Math.floor(-osTop / 6);
+        document.documentElement.scrollTop = document.body.scrollTop = osTop + speed;
+        isTop =true;  //用于阻止滚动事件清除定时器
+        if(osTop == 0){
+            clearInterval(timer);
+        }
+    },30);
 }
 
 // 播放列表
