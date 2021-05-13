@@ -10,9 +10,8 @@
 }
 
 .nologin {
-    display: none;
-    position: absolute;
-    top: 0;
+    display: block;
+    padding: 10px 0;
     text-align: center;
 }
 
@@ -28,7 +27,7 @@
 }
 
 .loging {
-    display: block;
+    display: none;
     top: 0;
     font-size: 16px;
 }
@@ -47,13 +46,18 @@
 
 .loging-r {
     display: inline-block;
+    width: 80px;
 }
 
 .user-name {
     width: 100%;
-    font-size: 25px;
+    padding: 10px 0;
+    font-size: 15px;
     font-weight: 700;
     text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .loging button {
@@ -105,7 +109,6 @@
     width: 80px;
     vertical-align: middle;
 }
-
 
 .t-pic img {
     width: 100%;

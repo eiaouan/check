@@ -5,6 +5,8 @@ function ajax(options){
     // 使用options对象中的属性覆盖defaults对象中的属性
     Object.assign(defaults,options);
     var xhr = new XMLHttpRequest();
+    // xhrFields: { withCredentials: true }
+    // xhr.withCredentials = true;
     var params = '';
     // 使用循环动态拼接请求参数
     for(let attr in defaults.date) {

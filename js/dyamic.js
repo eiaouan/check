@@ -263,7 +263,7 @@ getHotList(mand);
         }
         loadList(date,fn);
     }) 
-})()
+})();
 
 
 //  点击加载
@@ -277,24 +277,55 @@ rankBox.addEventListener('click',function(ev) {
     }
 });
 
-// 获取热门话题
 
-(function(){
-    let tdetail = {
-        type : 'get',
-        url : 'https://autumnfish.cn/hot/topic',
-        date : {
-            limit : 6,
-            offset : 6,
-        },
-        success : function(d){
-            console.log(d);
-        },
-        error : function(d){
-            console.log(d);
+/**
+ * @function 获取热门话题
+ */
+function getHotTopic(page){
+    if(document.cookie){
+        let tdetail = {
+            type : 'get',
+            url : 'https://autumnfish.cn/hot/topic',
+            date : {
+                cookie : document.cookie,
+                limit : 5,
+                offset : 5*(page-1),
+            },
+            success : function(d){
+                console.log(d);
+                // 加载进html
+                let ul = document.querySelector('.b-hot-topic ul');
+                ul.innerHTML = '';  // 先清空li
+                for(let i = 0 ; i < d.hot.length; i++){
+                    let str = '<li>\
+                    <div class="t-pic">\
+                        <img src="' + d.hot[i].sharePicUrl + '" alt="">\
+                    </div>\
+                    <p class="t-title">' + d.hot[i].title + '</p>\
+                </li>'
+                ul.insertAdjacentHTML("beforeend",str); // 插入ul末尾
+                }
+            },
+            error : function(d){
+                console.log(d);
+            }
         }
+        ajax(tdetail);
+    }else { // 如果没有cookie，弹出登录窗口
+        let login = document.querySelector('.box-login');
+        login.style.display = 'block';
     }
-    ajax(tdetail);
+    
+}
+  
+(function (){
+    let tpc = document.querySelector('.b-hot-topic span');  // 换一换
+    tpc.page = 1;     // 设置page属性记录页码
+    tpc.addEventListener('click',function(){
+        getHotTopic(this.page);
+        console.log(this.page);
+        this.page += 1;
+    })
 })();
 
 
@@ -310,6 +341,12 @@ rankBox.addEventListener('click',function(ev) {
     })
 })();
 
+/**
+ * @function 发送搜索请求
+ * @param {string} value 用户输入的查询值
+ * @param {number} page 页码
+ * @param {function} callBack 回调函数
+ */
 
 function sendSearchRequest(value,page,callBack){
     console.log(page);
@@ -339,9 +376,12 @@ function sendSearchRequest(value,page,callBack){
 }
 
 
-
-
-function loadSearchSongs(d,value) {     // 重载页面
+/**
+ * @function 重新加载搜索页面
+ * @param {object} d  页面需要加载的数据
+ * @param {string} value 搜索的的关键字
+ */
+function loadSearchSongs(d,value) {     
     let inp = document.querySelector('#s-inp');
     inp.value = value
     // 动态将搜索内容写入

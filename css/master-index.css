@@ -238,6 +238,7 @@
 /* 个人菜单 */
 
 .personal-menu {
+    display: none;
     position: absolute;
     top: 37px;
     left: -37px;
@@ -346,6 +347,7 @@ footer {
     width: 100%;
     margin-top: 50px;
     background: rgb(36, 36, 36);
+    min-width: 980px;
 }
 footer .w a:hover {
     color: #ddd;

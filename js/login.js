@@ -8,7 +8,7 @@ let err = document.querySelector('.log-2-err'); // 错误信息提示框
 
 // 按钮切换
 // 点击显示登录界面
-logBtn.addEventListener('click',function() {
+logBtn.addEventListener('click', function () {
     box.style.display = 'block';
 })
 
@@ -21,138 +21,61 @@ close.forEach(e => {
         box.style.display = 'none';
     })
 });
-    
+
 // 手机登录
 let numBtn = document.querySelector('#log-num');
-numBtn.addEventListener('click',function(){
+numBtn.addEventListener('click', function () {
     // 清空提示框和错误信息
     log2.querySelector('#account').value = '';
     err.style.display = 'none';
-    logTop[1].querySelector('h4').innerHTML = '手机号登录' ;
-    log2.querySelector('#account').setAttribute('placeholder','请输入手机号');
-    enterLog2 ();
+    logTop[1].querySelector('h4').innerHTML = '手机号登录';
+    log2.querySelector('#account').setAttribute('placeholder', '请输入手机号');
+    enterLog2();
 })
 
 // 邮箱登录
 let addressBtn = document.querySelector('#log-address');
 // 修改第二个页面
-addressBtn.addEventListener('click',function(){
+addressBtn.addEventListener('click', function () {
     log2.querySelector('#account').value = '';
     err.style.display = 'none';
-    logTop[1].querySelector('h4').innerHTML = '邮箱登录' ;
-    log2.querySelector('#account').setAttribute('placeholder','请输入邮箱地址');
-    enterLog2 ();
+    logTop[1].querySelector('h4').innerHTML = '邮箱登录';
+    log2.querySelector('#account').setAttribute('placeholder', '请输入邮箱地址');
+    enterLog2();
 })
 
 // 进入第二个登录页面
-function enterLog2 () {
-    let t = getPolicyAgree ();
-    if(t){
+function enterLog2() {
+    let t = getPolicyAgree();
+    if (t) {
         log1.style.display = 'none';
         log2.style.display = 'block';
-    }else {
-        return ;
+    } else {
+        return;
     }
 }
 
 // 同意政策是否被选中
-function getPolicyAgree () {
+function getPolicyAgree() {
     let logCheck = document.querySelector('#log-agree');
     let agree = document.querySelector('.log-tip');
-    if(logCheck.checked){
+    if (logCheck.checked) {
         return true;
-    }else{
+    } else {
         agree.style.display = 'block';
-        setTimeout(function(){
+        setTimeout(function () {
             agree.style.display = 'none';
-        },2000)
+        }, 2000)
         return false;
     }
 }
 
 // 返回登录选项
 let method = document.querySelector('.log-2-method');
-method.addEventListener('click',function(){
+method.addEventListener('click', function () {
     log1.style.display = 'block';
     log2.style.display = 'none';
 })
-
-
-
-// 手机/邮箱登录
-function login(obj) {
-    let numValue = document.querySelector('#account').value;
-    let passValue = document.querySelector('#password').value;
-    let span = document.querySelector('.log-2-err span');   // 提示内容框
-    var reg = obj.reg;  // RegExp 对象，正则表达式
-    if(!reg.test(numValue)){
-        span.innerHTML = '请输入正确的' + obj.tip;
-        err.style.display = 'block';
-        return false; 
-    }else if(!passValue){
-        span.innerHTML = '密码不能为空';
-        err.style.display = 'block';
-        return false; 
-    } 
-    console.log();
-    let login = {
-        type : 'post',
-        url : obj.url,
-        date : {
-            phone : numValue,
-            password : passValue,
-        },
-        header : {
-            'Content-Type' : 'application/json'
-        },
-        success : function(date){
-            box.style.display = 'none';
-            alert('登录成功');
-            // console.log(date);
-            addCookie(date);
-            console.log(cookie,document.cookie);
-
-        },
-        error : function(date){
-            span.innerHTML = date.msg;
-            err.style.display = 'block';
-            console.log(date.token);
-        }
-    }
-    ajax(login);
-}
-
-
-// 点击调用函数login
-let confirm = document.querySelector('#log-btn'); // 确认登录
-confirm.addEventListener('click',function(){
-    // 设置登录参数，根据不同的登录方式传递不同对象
-    let logByNum = {
-        tip : '手机号',
-        reg : /^0{0,1}(13[0-9]|15[0-9])[0-9]{8}$/ ,
-        url : 'https://autumnfish.cn/login/cellphone' ,
-        // 需要传给ajax的参数
-        type : 'phone',
-        // 电话号码成功登录之后的函数
-        success : function(){}
-    }
-    let logByAdress = {
-        tip : '邮箱地址',
-        reg : /^\w+((-\w+)|(\.\w+))*@163+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/,
-        url : 'https://autumnfish.cn/login',
-        // 需要传给ajax的参数
-        type : 'address',
-        // 邮箱成功登录之后的函数
-        success : function(){}
-    }
-    
-    if (logTop[1].querySelector('h4').innerHTML == '邮箱登录' ){
-    login(logByAdress);
-    } else {
-        login(logByNum);
-    }
-})
-
 
 // 登录盒子随着鼠标移动
 function dragMove(son, father) {
@@ -176,7 +99,7 @@ function dragMove(son, father) {
             father.style.top = curT + 'px'
             father.style.left = curL + 'px'
         }
-        
+
         document.addEventListener('mousemove', move)
         document.addEventListener('mouseup', function () {
             document.removeEventListener('mousemove', move)
@@ -184,58 +107,222 @@ function dragMove(son, father) {
     })
 }
 
-dragMove(logTop[0],main);
-dragMove(logTop[1],main);
 
+// 点击调用函数login
+let confirm = document.querySelector('#log-btn'); // 确认登录
+confirm.addEventListener('click', function () {
+    // 设置登录参数，根据不同的登录方式传递不同对象
+    let logByNum = {
+        tip: '手机号',
+        reg: /^0{0,1}(13[0-9]|15[0-9])[0-9]{8}$/,
+        url: 'https://autumnfish.cn/login/cellphone',
+        // 需要传给ajax的参数
+        type: 'phone',
+        // 电话号码成功登录之后的函数
+        success: function () { }
+    }
+    let logByAdress = {
+        tip: '邮箱地址',
+        reg: /^\w+((-\w+)|(\.\w+))*@163+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/,
+        url: 'https://autumnfish.cn/login',
+        // 需要传给ajax的参数
+        type: 'address',
+        // 邮箱成功登录之后的函数
+        success: function () { }
+    }
 
-// 登录成功后
-function addCookie(da){  // 传入登录成功后返回的数据，cookie，token
-console.log(document.cookie);
-    let cookie = da.cookie;
-    let token =da.token;
-    document.cookie = cookie;
-    // document.token =token
-    console.log(document.cookie);
-}
+    if (logTop[1].querySelector('h4').innerHTML == '邮箱登录') {
+        login(logByAdress);
+    } else {
+        login(logByNum);
+    }
+})
 
-// 发送一个请求  
-function text(token){
-    // (function(){
-
-    let tdetail = {
-        type : 'get',
-        url : 'https://autumnfish.cn/hot/topic',
-        date : {
-            limit : 6,
-            offset : 6,
+// 手机/邮箱登录
+function login(obj) {
+    let numValue = document.querySelector('#account').value;
+    let passValue = document.querySelector('#password').value;
+    let span = document.querySelector('.log-2-err span');   // 提示内容框
+    var reg = obj.reg;  // RegExp 对象，正则表达式
+    if (!reg.test(numValue)) {
+        span.innerHTML = '请输入正确的' + obj.tip;
+        err.style.display = 'block';
+        return false;
+    } else if (!passValue) {
+        span.innerHTML = '密码不能为空';
+        err.style.display = 'block';
+        return false;
+    }
+    console.log();
+    let login = {
+        type: 'post',
+        url: obj.url,
+        date: {
+            phone: numValue,
+            password: passValue,
         },
-        header : {
-            token : token,
+        header: {
+            'Content-Type': 'application/json'
         },
-        success : function(d){
-            console.log(d);
+        success: function (date) {
+            box.style.display = 'none';
+            // document.cookie = date.cookie;
+            document.cookie = encodeURIComponent(date.cookie);
+            loadCookieInf() // 获取账号信息
         },
-        error : function(d){
-            console.log(d);
+        error: function (date) {
+            span.innerHTML = date.msg;
+            err.style.display = 'block';
+            console.log(date.token);
         }
     }
-    ajax(tdetail);
-// })();s
-
-}
-// 获取cookie值的函数
-function getCookie(cname)
-{
-  var name = cname + "=";
-  var ca = document.cookie.split(';');
-  console.log(ca);
-  for(var i=0; i<ca.length; i++) 
-  {
-    var c = ca[i].trim();
-    console.log(c.substring(name.length,c.length));
-    if (c.indexOf(name)==0) return c.substring(name.length,c.length);
-  }
-  return "";
+    ajax(login)
 }
 
-console.log(getCookie('_remember_me'));
+dragMove(logTop[0], main);
+dragMove(logTop[1], main);
+
+/** 
+ * @function 发送用户信息请求
+ * @param {string} id 用户id
+ */
+function getUserInf(id) {
+    let ude = {
+        type: 'get',
+        url: '',
+        date: {
+            cookie: document.cookie, // 表示登录
+            uid: id,
+        },
+        success: function (date) {
+            console.log(date);
+            // 调用函数
+        },
+        error: function (date) {
+            console.log(date.msg);
+        }
+    }
+    ajax(ude);  // 发送请求
+}
+
+/**
+ * @function 右上角图标改变
+ * @param {object} da  登录成功后/再次发送请求获得账号的数据
+ */
+
+function ChangeuserHead(da) {
+    let head = document.querySelector('.person-head');
+    let login = document.querySelector('#login');
+    login.style.display = 'none';  //  隐藏登录按钮
+    head.style.display = 'inline-block'; // 显示头像
+    console.log(da);
+    // 获取用户id并赋值
+    let sId = da.account.id;
+    head.setAttribute('sId', sId);
+    // 头像图片
+    head.style.background = 'url(' + da.profile.avatarUrl + ')';
+    // 给头像添加点击事件
+    head.addEventListener('click', function () {
+        let mune = document.querySelector('.personal-menu'); // 头像下的菜单栏
+        mune.style.display = 'block';  // 点击头像显示菜单
+        mune.addEventListener('mouseleave', function () {
+            this.style.display = 'none';  // 鼠标离开隐藏
+        })
+    })
+}
+
+/**
+ * @function 用户名片
+ * @param {object} da  登录成功后/再次发送请求获得账号的数据
+ */
+function changeUserDetail(da) {
+    let nolog = document.querySelector('.nologin'); // 未登录时显示的盒子
+    let loging = document.querySelector('.loging') // 登录后显示的盒子
+    // 登陆后隐藏和显示
+    nolog.style.display = 'none';
+    loging.style.display = 'block';
+    // 写入用户信息
+    let pic = loging.querySelector('.user-pic img'); // 头像图片
+    pic.src = da.profile.avatarUrl;  // 显示头像
+    let name = loging.querySelector('.user-name');  // 用户名
+    name.innerHTML = da.profile.nickname;
+    // 调用subcount接口获取用户歌单，mv，节目数量
+    let subcount = {
+        type: 'get',
+        url: 'https://autumnfish.cn/user/subcount',
+        date: {
+            cookie: document.cookie,
+        },
+        success: function (date) {
+            let playlist = loging.querySelector('.playlist-count');  // 动态
+            playlist.innerHTML = date.createdPlaylistCount;
+            let mv = loging.querySelector('.mv-count'); // 关注
+            mv.innerHTML = date.mvCount;
+            let program = loging.querySelector('.program-count');  // 粉丝数
+            program.innerHTML = date.programCount;
+        }
+    }
+    ajax(subcount);
+
+}
+
+
+
+// 判断是否有cookie，如果有直接加载用户信息
+/**
+ * @function 加载cookie中账号的信息
+ * @description
+ */
+function loadCookieInf() {
+    if (document.cookie) {
+        let cde = {
+            type: 'get',
+            url: 'https://autumnfish.cn/user/account',
+            date: {
+                // encodeURIComponent()
+                // cookie: document.cookie,
+                cookie : document.cookie,
+            },
+            success: function (date) {
+                ChangeuserHead(date);
+                changeUserDetail(date);
+            },
+            error: function (date) {
+                console.log(date.msg);
+            }
+        }
+        ajax(cde);
+    }
+}
+//  刷新重新加载cookie，不留cookie
+window.onload = (function () {
+    loadCookieInf()
+});
+// 点击加载个人主页
+
+
+// 退出登录
+function logout() {
+    let out = {
+        type: 'get',
+        url: 'https://autumnfish.cn/logout',
+        // date: {
+        //     cookie: document.cookie
+        // },
+        success: function (date) {
+            console.log(date);
+        },
+        error: function (date) {
+            console.log(date);
+        }
+    }
+    ajax(out);
+}
+
+(function(){
+    let lout = document.querySelector('#logout');
+    lout.addEventListener('click',function(){
+        logout();
+        document.cookie = "__csrf=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+    })
+})();

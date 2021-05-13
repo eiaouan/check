@@ -100,13 +100,13 @@
 }
 
 
-.hot-class {
+.box-hot-class span {
     margin: 0 30px;
     font-size: 13px;
     color: rgb(141, 141, 141);
 }
 
-.hot-class:hover {
+.box-hot-class span:hover {
     color: rgb(194, 12, 12);
 }
 
