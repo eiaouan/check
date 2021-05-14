@@ -184,7 +184,7 @@ hotClassB.addEventListener('click',function(e){
 
 function loadHotList(date){
     let infArr = date.playlists;  // 获取歌单id
-    let listBox = document.querySelectorAll('.hot-song'); // a标签
+    let listBox = document.querySelectorAll('.hot .hot-song'); // a标签
     for(let i =0 ; i<listBox.length; i++){
         listBox[i].setAttribute('listId',infArr[i].id);
     }
@@ -210,6 +210,8 @@ function loadHotList(date){
         loadList(da,fn);
     });
 }
+// 默认华语
+getHotList(mand);
 
 // 加载歌单细节 
 function loadList (da,callBack){
@@ -229,8 +231,7 @@ function loadList (da,callBack){
 }
 
 
-// 默认华语
-getHotList(mand);
+
 
 // 榜单内容
 // 加载主页表单内容
@@ -282,12 +283,13 @@ rankBox.addEventListener('click',function(ev) {
  * @function 获取热门话题
  */
 function getHotTopic(page){
-    if(document.cookie){
+    let cookie = sessionStorage.getItem('cookie')||localStorage.getItem('cookie')
+    if(cookie){
         let tdetail = {
             type : 'get',
             url : 'https://autumnfish.cn/hot/topic',
             date : {
-                cookie : document.cookie,
+                cookie : cookie,
                 limit : 5,
                 offset : 5*(page-1),
             },

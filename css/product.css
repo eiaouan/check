@@ -92,7 +92,9 @@
 .hot-title,
 .shelves-title,
 .singer-title,
-.rank-title {
+.rank-title,
+.l-title,
+.f-title {
     width: 100%;
     padding: 20px;
     text-align: center;

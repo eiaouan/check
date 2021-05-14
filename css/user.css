@@ -122,3 +122,129 @@
     overflow: hidden;
 }
 
+/* 个人主页 */
+#user {
+    display: none;
+    padding: 0 40px;
+}
+
+/* 个人信息 */
+.u-i {
+    margin-top: 30px;
+}
+
+.u-pic {
+    display: inline-block;
+    width: 180px;
+    margin-right: 40px;
+    vertical-align: top;
+}
+
+.u-pic img {
+    width: 100%;
+}
+
+.u-intro {
+    display: inline-block;
+    width: 670px;
+}
+
+.u-1 {
+    margin-bottom: 10px;
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+}
+
+
+.u-1 span{
+    margin-right: 20px;
+}
+
+.u-name {
+    float: left;
+    font: 14px;
+}
+
+.u-level {
+    float: left;
+    width: 62px;
+    height: 19px;
+    line-height: 21px;
+    color: #e03a24;
+    font-size: 14px;
+    font-weight: bold;
+    font-style: italic;
+    border: 1px solid #e03a24;
+    border-radius: 16px;
+    text-align: center;
+    overflow: hidden;
+}
+
+.u-sex {
+    float: left;
+    width: 20px;
+    height: 20px;
+    background: url(../images/base/icon.png);
+    background-position: -41px -27px;
+    /* -41px -56px; */
+}
+
+.u-1 button {
+    float: right;
+}
+
+.u-2 div{
+    display: inline-block;
+    padding: 0 40px 0 10px;
+    border-right: 1px solid #ddd;
+}
+
+.u-count {
+    font-size: 24px;
+    color: #aaa;
+}
+
+.u-3 {
+    margin-top: 15px;
+    font-size: 14px;
+    color: #aaa;
+}
+
+.u-lis .l-title,
+.u-fol .f-title {
+    margin-bottom: 20px;
+}
+
+.b-lis {
+    height: 100%;
+}
+
+.u-lis .hot-son {
+    display: inline-block;
+}
+
+/* .u-fs {
+    display: flex;
+} */
+
+.u-fs ul li {
+    display: inline-block;
+    margin: 5px;
+    width: 169px;
+    text-align: center;
+}
+
+.u-fs ul li img {
+    width: 100%;
+}
+
+.u-fs ul li p {
+    margin-top: 5px;
+    font-size: 15px;
+}
+
+.fs-c {
+    color: #ccc;
+
+}
+

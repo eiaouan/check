@@ -143,6 +143,7 @@ function login(obj) {
     let numValue = document.querySelector('#account').value;
     let passValue = document.querySelector('#password').value;
     let span = document.querySelector('.log-2-err span');   // 提示内容框
+    let auto = document.querySelector('#autolog');  // 是否选择自动登录
     var reg = obj.reg;  // RegExp 对象，正则表达式
     if (!reg.test(numValue)) {
         span.innerHTML = '请输入正确的' + obj.tip;
@@ -166,8 +167,12 @@ function login(obj) {
         },
         success: function (date) {
             box.style.display = 'none';
-            // document.cookie = date.cookie;
-            document.cookie = encodeURIComponent(date.cookie);
+            if(auto.checked){
+                console.log(date.cookie);
+                localStorage.setItem('cookie',date.cookie);
+            }else {
+                sessionStorage.setItem('cookie',date.cookie);
+            }
             loadCookieInf() // 获取账号信息
         },
         error: function (date) {
@@ -178,6 +183,7 @@ function login(obj) {
     }
     ajax(login)
 }
+
 
 dragMove(logTop[0], main);
 dragMove(logTop[1], main);
@@ -191,7 +197,7 @@ function getUserInf(id) {
         type: 'get',
         url: '',
         date: {
-            cookie: document.cookie, // 表示登录
+            cookie: sessionStorage.getItem('cookie')||localStorage.getItem('cookie'), // 表示登录
             uid: id,
         },
         success: function (date) {
@@ -217,8 +223,8 @@ function ChangeuserHead(da) {
     head.style.display = 'inline-block'; // 显示头像
     console.log(da);
     // 获取用户id并赋值
-    let sId = da.account.id;
-    head.setAttribute('sId', sId);
+    let uId = da.account.id;
+    head.uid = uId;
     // 头像图片
     head.style.background = 'url(' + da.profile.avatarUrl + ')';
     // 给头像添加点击事件
@@ -251,7 +257,7 @@ function changeUserDetail(da) {
         type: 'get',
         url: 'https://autumnfish.cn/user/subcount',
         date: {
-            cookie: document.cookie,
+            cookie: sessionStorage.getItem('cookie')||localStorage.getItem('cookie'),
         },
         success: function (date) {
             let playlist = loging.querySelector('.playlist-count');  // 动态
@@ -274,14 +280,14 @@ function changeUserDetail(da) {
  * @description
  */
 function loadCookieInf() {
-    if (document.cookie) {
+    if (sessionStorage.getItem('cookie')||localStorage.getItem('cookie')) {
         let cde = {
             type: 'get',
             url: 'https://autumnfish.cn/user/account',
             date: {
                 // encodeURIComponent()
                 // cookie: document.cookie,
-                cookie : document.cookie,
+                cookie : sessionStorage.getItem('cookie')||localStorage.getItem('cookie'),
             },
             success: function (date) {
                 ChangeuserHead(date);
@@ -306,9 +312,6 @@ function logout() {
     let out = {
         type: 'get',
         url: 'https://autumnfish.cn/logout',
-        // date: {
-        //     cookie: document.cookie
-        // },
         success: function (date) {
             console.log(date);
         },
@@ -323,6 +326,10 @@ function logout() {
     let lout = document.querySelector('#logout');
     lout.addEventListener('click',function(){
         logout();
-        document.cookie = "__csrf=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+        if(sessionStorage.getItem('cookie')){
+            sessionStorage.clear();
+        }else if (localStorage.getItem('cookie')){
+            localStorage.clear();
+        }
     })
 })();

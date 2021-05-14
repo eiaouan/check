@@ -98,13 +98,15 @@
                         <a href="#">创作者中心</a>
                     </div>
                     <div class="top-login">
-                        <a href="#" id="login">登录</a>
+                        <a href="javascript:;" id="login">登录</a>
                         <div class="person-head" style="display: none;"> 
                             <div class="personal-menu">
                                 <ul>
                                     <li>
-                                        <i class="top-ico top-ico-1"></i>
-                                        <span>我的主页</span>
+                                        <a href="#/user">
+                                            <i class="top-ico top-ico-1"></i>
+                                            <span>我的主页</span>
+                                        </a>
                                     </li>
                                     <li>
                                         <i class="top-ico top-ico-2"></i>
@@ -152,7 +154,7 @@
         <!-- 占位 -->
         <div class="occu"></div>
         <!-- 首页 -->
-    <div id="index" style="display: block;">
+    <div id="index" style="display: block;" class="page">
         <!-- 轮播图 -->
         <div class="box-reco">
             <div class="scroll">
@@ -315,7 +317,9 @@
                     </div>
                     <div class="loging">
                         <div class="user-pic">
+                            <a href="#/user">
                             <img src="images/occupy/109951162820707114.jpg" alt="">
+                        </a>
                         </div>
                         <div class="loging-r">
                             <div class="user-name">用户名</div>
@@ -715,7 +719,8 @@
             </div>
         </div>
     </div>
-    <div id="search" class="w" style="display: none;">
+    <!-- 搜索页面 -->
+    <div id="search" class="w page" style="display: none;">
         <div class="s-bar">
         <input type="text" value="something" id="s-inp">
         <input type="button" name="" id="s-btn">
@@ -761,6 +766,80 @@
         </div>
         <button href="#" class="pa-n">下一页&nbsp;&gt;</button>
     </div>
+    </div>
+    <!-- 用户主页 -->
+    <div id="user" class="page w">
+        <div class="u-i">
+            <div class="u-pic">
+                <img src="images/occupy/109951165875486814.jpg" alt="">
+            </div>
+            <div class="u-intro">
+                <div class="u-1 clearfix">
+                    <span class="u-name">nihao</span>
+                    <span class="u-level">Lv 5</span>
+                    <span class="u-sex"></span>
+                    <button>编辑个人资料</button>
+                </div>
+                <div class="u-2">
+                    <!-- 动态，关注，粉丝的数量 -->
+                    <div class="u-c">
+                        <p class="u-count even-count">0</p>
+                        <p>动态</p>
+                    </div>
+                    <div class="u-c">
+                        <p class="u-count follows">0</p>
+                        <p>关注</p>
+                    </div>
+                    <div class="u-c">
+                        <p class="u-count followeds">0</p>
+                        <p>粉丝</p>
+                    </div>
+                </div>
+                <div class="u-3">
+                    <p>所在地区：<span class="city">广东省 广州市</span></p>
+                    <p>社交网络：</p>
+                </div>
+            </div>
+        </div>
+        <!-- 用户创建的歌单 -->
+        <div class="u-lis">
+            <div class="l-title">
+                <h2>我的歌单</h2>
+            </div>
+            <div class="b-lis">
+                <!-- 使用hotsong的样式 -->
+                <!-- <div class="hot-son">
+                    <a href="#" class="hot-song">
+                        <div class="msk"></div>
+                        <img src="" alt="">
+                        <div class="b-coast">
+                            <span class="hot-play"></span>
+                            <span class="hot-list"></span>
+                            播放次数
+                            <div class="plays"></div>
+                        </div>
+                        <p></p>
+                    </a>
+                </div> -->
+            </div>           
+            <p><a href="javascript:;" class="u-l-more">更多</a></p>   
+        </div>
+        <!-- 关注 -->
+        <div class="u-fol">
+            <div class="f-title">
+                <h2>关注</h2>
+            </div>
+            <div class="u-fs">
+               <ul>
+                   <!-- <li>
+                       <img src="images/occupy/109951165904251543.jpg" alt="">
+                       <p class="fs-name">sia</p>
+                   </li> -->
+               </ul>
+               <!-- 换一批 -->
+               <p><a href="javascript:;" class="fs-more">更多</a></p>
+            </div>
+        </div>
     </div>
     <footer>
         <div class="w">
@@ -925,7 +1004,7 @@
                     </div>
                     <div class="log-2-choice">
                         <div class="log-2-auto">
-                            <input type="checkbox">
+                            <input type="checkbox" id="autolog">
                             <span>自动登录</span>
                         </div>
                         <div class="log-2-forget">
@@ -949,6 +1028,6 @@
     <script type="text/javascript" src="js/songplay.js"></script>
     <script type="text/javascript" src="js/dyamic.js"></script>
     <script type="text/javascript" src="js/login.js" async defer></script>
-    <script type=""></script>
+    <script type="text/javascript" src="js/user.js" async defer></script>
 </body>
 </html>
