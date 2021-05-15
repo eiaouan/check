@@ -10,7 +10,16 @@ let err = document.querySelector('.log-2-err'); // 错误信息提示框
 // 点击显示登录界面
 logBtn.addEventListener('click', function () {
     box.style.display = 'block';
-})
+});
+
+// 名片点击显示登录入口
+
+(function(){
+    let logBtn2 = document.querySelector('.nologin button');
+    logBtn2.addEventListener('click',function(){
+    box.style.display = 'block';
+    })
+})();
 
 // 关闭登录界面
 let close = document.querySelectorAll('.log-close');
@@ -166,6 +175,10 @@ function login(obj) {
             'Content-Type': 'application/json'
         },
         success: function (date) {
+            let inpA = box.querySelectorAll('input');
+            inpA.forEach(e=>{
+                e.value = '';
+            })
             box.style.display = 'none';
             if(auto.checked){
                 console.log(date.cookie);
@@ -306,14 +319,17 @@ window.onload = (function () {
 });
 // 点击加载个人主页
 
+// 退出登录需要调用接口吗？
 
-// 退出登录
+/**
+ * @function 退出登录
+ */
 function logout() {
     let out = {
         type: 'get',
         url: 'https://autumnfish.cn/logout',
         success: function (date) {
-            console.log(date);
+
         },
         error: function (date) {
             console.log(date);
@@ -327,9 +343,20 @@ function logout() {
     lout.addEventListener('click',function(){
         logout();
         if(sessionStorage.getItem('cookie')){
-            sessionStorage.clear();
+            sessionStorage.clear('cookie');
         }else if (localStorage.getItem('cookie')){
-            localStorage.clear();
+            localStorage.clear('cookie');
         }
+        // 将样式恢复成未登录状态
+        // 头像处
+        let head = document.querySelector('.person-head');
+        let a = document.querySelector('#login'); // 登录按钮
+        head.style.display = 'none';
+        a.style.display = 'block';
+        // 名片处
+        let log = document.querySelector('.loging');  
+        let nolog = document.querySelector('.nologin');
+        log.style.display = 'none';
+        nolog.style.display = 'block';
     })
 })();
