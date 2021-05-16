@@ -1,3 +1,13 @@
+// 防抖
+function debounce(fn, wait) {    
+    var timeout = null;    
+    return function() {        
+        if(timeout !== null)   
+        clearTimeout(timeout);        
+        timeout = setTimeout(fn, wait);    
+    }
+}
+
 // 推荐部分大轮播图
 function scroll() {
     var box = document.querySelector('.box-reco');// 获取大框
@@ -114,6 +124,62 @@ function scroll() {
     })
 })();
     
+
+// 新碟上架滚动
+function scr() {
+    let div = document.querySelector('.shelves .b-shelves'); // 最大的盒子，装5个ul
+    let ulA = document.querySelectorAll('.shelves ul'); // 全部轮播ul
+    let i = 0;
+    let w = ulA[0].offsetWidth;
+    div.style.left = (- (i++) * w ) + 'px'; // 显示第一张
+    let arrowR = document.querySelector('.she-arrow-l');
+    let arrowL = document.querySelector('.she-arrow-r');
+    // 监听左右箭头
+    arrowL.addEventListener('click', function () {
+        debounce(moveL, 1000);
+    });
+    arrowR.addEventListener('click',function(){
+        debounce(moveR, 1000);
+
+    })
+    function moveL() {  // 向左移动
+        if (i == 3) {
+            div.style.left = '0px';
+            i = 0;
+        }
+        let timer = null;
+        let speed = Math.floor(w/100); // 设置步长
+        clearInterval(timer); // 消除之前的计时器
+        timer = setInterval(function () {
+            if (div.style.left.substr(0,div.style.left.length-2) <= ( - (i+1) * w )) {
+                i++;
+                clearInterval(timer);  // 如果到达，清除计时器
+            } else {
+                div.style.left = div.style.left.substr(0,div.style.left.length-2)- speed + "px"; // 向左移动
+            }
+        }, 10)
+    }
+    function moveR() {
+        if (i == 1) {
+            div.style.left = -4 * w + 'px';
+            i = 4;
+            // div.style.left = - i-- * ulA[0].offsetWidth + 'px';
+        }
+        let timer = null;
+        let speed = Math.floor(w / 100); // 设置步长
+        clearInterval(timer); // 消除之前的计时器
+        timer = setInterval(function () {
+            if (div.style.left.substr(0, div.style.left.length - 2) >= (- (i - 1) * w)) {
+                i--;
+                clearInterval(timer);  // 如果到达，清除计时器
+            } else {
+                div.style.left = parseInt(div.style.left.substr(0, div.style.left.length - 2)) + speed + "px"; // 向右移动
+            }
+        }, 10)
+        // div.style.left = - i-- * ulA[0].offsetWidth + 'px';
+    }
+}
+scr();
 
 function gotop(){
     timer = setInterval(function(){

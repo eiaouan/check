@@ -234,7 +234,6 @@ function ChangeuserHead(da) {
     let login = document.querySelector('#login');
     login.style.display = 'none';  //  隐藏登录按钮
     head.style.display = 'inline-block'; // 显示头像
-    console.log(da);
     // 获取用户id并赋值
     let uId = da.account.id;
     head.uid = uId;

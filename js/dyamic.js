@@ -1,64 +1,4 @@
 
-
-
-
-// 滚动
-function scr() {
-    let div = document.querySelector('.shelves .b-shelves'); // 最大的盒子，装5个ul
-    let ulA = document.querySelectorAll('.shelves ul'); // 全部轮播ul
-    let i = 0;
-    let w = ulA[0].offsetWidth;
-    div.style.left = (- (i++) * w ) + 'px'; // 显示第一张
-    let arrowR = document.querySelector('.she-arrow-l');
-    let arrowL = document.querySelector('.she-arrow-r');
-    // 监听左右箭头
-    arrowL.addEventListener('click', function () {
-        moveL();
-    });
-    arrowR.addEventListener('click',function(){
-        moveR();
-    })
-    function moveL() {  // 向左移动
-        if (i == 3) {
-            div.style.left = '0px';
-            i = 0;
-        }
-        let timer = null;
-        let speed = Math.floor(w/100); // 设置步长
-        clearInterval(timer); // 消除之前的计时器
-        timer = setInterval(function () {
-            if (div.style.left.substr(0,div.style.left.length-2) <= ( - (i+1) * w )) {
-                i++;
-                clearInterval(timer);  // 如果到达，清除计时器
-            } else {
-                div.style.left = div.style.left.substr(0,div.style.left.length-2)- speed + "px"; // 向左移动
-            }
-        }, 10)
-    }
-    function moveR() {
-        if (i == 1) {
-            div.style.left = -4 * w + 'px';
-            i = 4;
-            // div.style.left = - i-- * ulA[0].offsetWidth + 'px';
-        }
-        let timer = null;
-        let speed = Math.floor(w / 100); // 设置步长
-        clearInterval(timer); // 消除之前的计时器
-        timer = setInterval(function () {
-            if (div.style.left.substr(0, div.style.left.length - 2) >= (- (i - 1) * w)) {
-                i--;
-                clearInterval(timer);  // 如果到达，清除计时器
-            } else {
-                div.style.left = parseInt(div.style.left.substr(0, div.style.left.length - 2)) + speed + "px"; // 向右移动
-            }
-        }, 10)
-        // div.style.left = - i-- * ulA[0].offsetWidth + 'px';
-    }
-}
-scr();
-
-
-
 // 热门推荐
 // 华语,流行,摇滚,民谣,电子
 // 默认华语
@@ -108,7 +48,7 @@ function loadHotList(date){
     let infArr = date.playlists;  // 获取歌单id
     let listBox = document.querySelectorAll('.hot .hot-song'); // a标签
     for(let i =0 ; i<listBox.length; i++){
-        listBox[i].setAttribute('listId',infArr[i].id);
+        listBox[i].listid = infArr[i].id;
     }
     
     listBox.forEach( e =>{
@@ -116,7 +56,7 @@ function loadHotList(date){
         let plays = e.querySelector('.plays'); // 播放次数
         let p = e.querySelector('p'); // 描述
         let da = {                  // 要传递的数据
-            id : e.getAttribute('listId'),
+            id : e.listid,
         }
         let fn = function (d) {
             img.src = d.playlist.coverImgUrl;

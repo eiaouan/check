@@ -88,7 +88,7 @@ function LoadBarSong(date) {
 
 /**
  * @function 加载播放列表
- * @param {[]} idList 播放列表的歌曲id数组 
+ * @param {Array} idList 播放列表的歌曲id数组 
  */
 function loadSongList(idList) {
     let ul = document.querySelector('.song-list');
@@ -108,15 +108,18 @@ function loadSongList(idList) {
                     // 把每一首歌加载到播放列表
                     let ars = '';
                     for(ar of date.songs[i].ar){
-                        ars += ar.name;
+                        ars +=  ar.name + '&nbsp;';
                     }
                 li.innerHTML = date.songs[i].name + ' - ' + ars;
                 li.sid = date.songs[i].id;
                 li.addEventListener('click',function(){
                     barSong.sid = li.sid;
-                     setSrc();
+                    setSrc();
                  })
                 ul.appendChild(li);
+                let span = document.createElement('span');
+                span.innerHTML = '×'
+                li.appendChild(span);
                 }
                 
                 
@@ -206,21 +209,14 @@ function setSrc(){
     let play = document.querySelector('#play');
     play.flag =0;
     playSong();
+    setNowSongStyle();
 };
 
 // 顺序播放
 function playOrder(){
     //  index = 0;
     barSong.addEventListener('ended', function(){
-        this.index = this.idList.indexOf(this.sid);
-        setTimeout(() => {
-            if(this.index == this.idList.length-1){
-                this.sid = this.idList[0];
-            }else{
-                this.sid = this.idList[++this.index]
-            }
-            setSrc();
-        }, 200);
+        playNext.call(barSong);
     });
 }
 function loadNext(){
@@ -230,7 +226,7 @@ function loadNext(){
         playBack();
     });
     Nplay.addEventListener('mousedown', function () {
-        playNext();
+        playNext.call(barSong);
     })
 }
 
@@ -257,13 +253,13 @@ function playBack(){
  * @function 播放下一首
  */
 function playNext(){
-    let idList = barSong.idList;
-    barSong.index = idList.indexOf(barSong.sid);
+    this.index = this.idList.indexOf(this.sid);
+    console.log(this.index);
         setTimeout(() => {
-            if(barSong.index == idList.length-1){
-                barSong.sid = idList[0];
+            if(this.index == this.idList.length-1){
+                this.sid = this.idList[0];
             }else{
-                barSong.sid = idList[++barSong.index]
+                this.sid = this.idList[++this.index]
             }
             setSrc();
         }, 200);
@@ -282,7 +278,7 @@ function addid (id){
 // 改变id，idlist；
 function chuangeid (id){
     addid(id);
-    playNext();
+    playNext.call(barSong);
 }
 
 // 删除歌曲
@@ -292,7 +288,7 @@ function deleteid (){
     // this.Sid 要删除的id
     let idcount = barSong.idList.indexOf(this.sid);
     if(idcount == i){
-        playNext(); // 先播放下一首，在删除
+        playNext.call(barSong); // 先播放下一首，在删除
         barSong.idList.splice(idcount,1);
     }else {
         barSong.idList.splice(idcount,1);
@@ -300,22 +296,95 @@ function deleteid (){
 }
 
 // 监听榜单点击事件
-
 (function(){
     let box = document.querySelector('.box-rank');  // 榜单的主要部分
     // 委托
     box.addEventListener('click',function(ev){
+        // 播放其中一首格
         if(ev.target.className.includes('playsong')){
             chuangeid(ev.target.parentNode.parentNode.sid);
             console.log(ev.target.parentNode.parentNode.sid);
-        }else if (ev.target.className.includes('addsong')){
+        }else if (ev.target.className.includes('addsong')){  // 添加到播放列表
             console.log('add');
             addid(ev.target.parentNode.parentNode.sid)
+        } else if (ev.target.className == 'play-rank-list'){       // 播放其中一个表单的歌曲，但是之前的歌曲会被覆盖
+            let ul = ev.target.parentNode.parentNode.querySelector('ul'); // 获取ul
+            let liA = ul.querySelectorAll('li'); // 获取榜单的li
+            let oldlist = document.querySelector('.song-list') // 原本播放列表
+            oldlist.innerHTML = '';
+            let idList = new Array;
+            for(let i =0;i < liA.length;i++){
+                idList[i] = liA[i].sid;
+            }
+            barSong.idList = idList;
+            loadSongList(barSong.idList);
+        } else if (ev.target.className == 'add-rank-list'){
+            let ul = ev.target.parentNode.parentNode.querySelector('ul'); // 获取ul
+            let liA = ul.querySelectorAll('li');
+            let idList = new Array;
+            for(let i =0;i < liA.length;i++){
+                idList[i] = liA[i].sid;
+            }
+            barSong.idList = idList;
+            loadSongList(barSong.idList);
+            barSong.sid = liA[0].sid;
+            setSrc();
         }
     });
 
 })();
 
+// 监听热门推荐播放、添加歌单
+(function(){
+    let hotb = document.querySelector('.hot');
+    hotb.addEventListener('click',function(ev){
+        let ele = ev.target;
+        if(ele.className == 'hot-play'){
+            let lid = ele.parentNode.parentNode.listid;
+            let fn = function(date){
+                let idList = [];
+                console.log(date.privileges);
+                for( let i = 0; i< date.privileges.length;i++){
+                    idList[i] = date.privileges[i].id;
+                }
+                let oldlist = document.querySelector('.song-list'); // 原本播放列表
+                oldlist.innerHTML = '';
+                barSong.idList = idList;
+                barSong.sid = date.privileges[0].id
+                loadSongList(barSong.idList);
+                setSrc();
+            };
+            // 发送请求获取歌单详情
+            loadList({id : lid},fn);
+        }else if (ele.className == 'hot-list'){
+            let lid = ele.parentNode.parentNode.listid;
+            let fn = function(date){
+                let idList = [];
+                for( let i = 0; i< date.privileges.length;i++){
+                    idList[i] = date.privileges[i].id;
+                }
+                barSong.idList.push(...idList);
+                loadSongList(barSong.idList);
+            }
+            loadList({id : lid},fn);
+        }
+    })
+})();
+
+// 功能：删除播放列表中的歌单
+// ，找到当前播放的歌曲添加样式
+function setNowSongStyle(){
+    // 遍历li
+    let liA = document.querySelectorAll('.song-list li');
+    liA.forEach(li=>{
+        li.className = '';
+    })
+    for (li of liA) {
+        if (li.sid == barSong.sid) {
+            li.className = 'play-now';
+        }
+    }
+}
 
 // js有时只能后去内联样式
 // 要获取文件中的样式
