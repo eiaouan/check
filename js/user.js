@@ -184,10 +184,8 @@ function loadUserFol(d){
     fmore.page = fmore.page || 1;
     let ul = document.querySelector('.u-fs ul'); //  盒子
     ul.innerHTML = ''; // 先清空盒子
-    console.log(d);
     for(let i =0; i<d.follow.length; i++){
         let f = d.follow[i];
-        console.log(f);
         let str = '<li>\
                     <img src="'+ f.avatarUrl +'" alt="">\
                     <p class="fs-name">' + f.nickname + '</p>\

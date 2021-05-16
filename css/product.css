@@ -14,6 +14,7 @@
 .box-reco {
     position: relative;
     width: 100%;
+    min-width: 980px;
     height: 380px;
     /* background: url(../images/scroll/109951165908393576.jpg) no-repeat; */
     background-size: 100%;
@@ -99,6 +100,7 @@
     padding: 20px;
     text-align: center;
     border-bottom: 3px solid rgb(194, 12, 12);
+    min-width: 980px;
 }
 
 
@@ -173,6 +175,8 @@
     color: #ddd;
 }
 
+
+
 .hot-play::after,
 .hot-list::after {
     display: inline-block;
@@ -183,8 +187,25 @@
     font-size: 50px;
 }
 
+.hot-collect {
+    position: absolute;
+    left: 31%;
+    bottom: 3%;
+    color: #ddd;
+}
+
+.hot-collect::after {
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    content: '\e980';
+    font-family: 'icomoon';
+    font-size: 50px;
+}
+
 .hot-play:hover,
-.hot-list:hover {
+.hot-list:hover,
+.hot-collect:hover {
     color: #fff;
 }
 
@@ -394,13 +415,14 @@
 .rank {
     position: relative;
     height: 45px;
+    padding-left: 10px;
     line-height: 45px;
     vertical-align: middle;
 }
 
 .rank a {
     display: inline-block;  
-    width: 120px;
+    width: 22%;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -429,7 +451,7 @@
 .pic-num {
     position: absolute;
     bottom: 0;
-    left: 0;
+    left: 10px;
     width: 30px;
     height: 30px;
     line-height: 30px;
@@ -437,7 +459,6 @@
     background: rgb(189, 68, 68);
     text-align: center;
     font-size: 20px;
-    z-index: 1;
     vertical-align: top;
 }
 
@@ -450,7 +471,7 @@
 
 .rank .singer-name {
     position: absolute;
-    right: 10px;
+    right: 0px;
     vertical-align: middle;
 }
 
@@ -480,7 +501,7 @@
     /* margin-left: 5px; */
     padding-right: 15px;
     font-family: 'icomoon';
-    font-size: 20px;
+    font-size: 18px;
     color: rgb(245, 241, 241);
     vertical-align: middle;
 }

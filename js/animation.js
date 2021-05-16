@@ -129,17 +129,20 @@ function scroll() {
 function scr() {
     let div = document.querySelector('.shelves .b-shelves'); // 最大的盒子，装5个ul
     let ulA = document.querySelectorAll('.shelves ul'); // 全部轮播ul
-    let i = 0;
+    let i = 1;
     let w = ulA[0].offsetWidth;
-    div.style.left = (- (i++) * w ) + 'px'; // 显示第一张
+    div.style.left = (- i * w ) + 'px'; // 显示第一张
     let arrowR = document.querySelector('.she-arrow-l');
     let arrowL = document.querySelector('.she-arrow-r');
+    let lt = null;  // 左边及时器
+    let rt = null ; //右边计时器
+    let timer = null;
     // 监听左右箭头
     arrowL.addEventListener('click', function () {
-        debounce(moveL, 1000);
+            moveL();
     });
     arrowR.addEventListener('click',function(){
-        debounce(moveR, 1000);
+        moveR();
 
     })
     function moveL() {  // 向左移动
@@ -147,7 +150,6 @@ function scr() {
             div.style.left = '0px';
             i = 0;
         }
-        let timer = null;
         let speed = Math.floor(w/100); // 设置步长
         clearInterval(timer); // 消除之前的计时器
         timer = setInterval(function () {
@@ -158,6 +160,7 @@ function scr() {
                 div.style.left = div.style.left.substr(0,div.style.left.length-2)- speed + "px"; // 向左移动
             }
         }, 10)
+        console.log(i);
     }
     function moveR() {
         if (i == 1) {
@@ -165,7 +168,6 @@ function scr() {
             i = 4;
             // div.style.left = - i-- * ulA[0].offsetWidth + 'px';
         }
-        let timer = null;
         let speed = Math.floor(w / 100); // 设置步长
         clearInterval(timer); // 消除之前的计时器
         timer = setInterval(function () {
@@ -189,7 +191,7 @@ function gotop(){
         var speed = Math.floor(-osTop / 6);
         document.documentElement.scrollTop = document.body.scrollTop = osTop + speed;
         isTop =true;  //用于阻止滚动事件清除定时器
-        if(osTop == 0){
+        if(osTop <= 0){
             clearInterval(timer);
         }
     },30);
@@ -298,11 +300,49 @@ function getSearchRelative() {
 }
 
 
+// 适应
+(function () {
+    let timer = null;
+    window.onresize = function () {
+        fn();
+    }
+    let fn = function(){
+        if (timer) {
+            clearTimeout(timer);
+        }
+        timer = setTimeout(() => {
+            let main = document.querySelectorAll('.main'); // 中间部分,和榜单大盒子
+            let rw = document.querySelector('.rw'); // 右边侧边栏
+            let br = document.querySelector('.br'); // 右下角图标
+            if (window.innerWidth < 1200) {
+                main.forEach(b => {
+                    b.style.width = '980px'
+                })
+                rw.style.display = 'none';
+                br.style.display = 'none';
+            } else {
+                main.forEach(b => {
+                    b.style.width = '1200px'
+                })
+                rw.style.display = 'block';
+                br.style.display = 'block';
+            }
+        }, 500);
+    }
+    fn(); // 打开页面时检测大小
+})()
 
+function debounce(fn, wait) {    
+    var timeout = null;    
+    return function() {        
+        if(timeout !== null)   
+        clearTimeout(timeout);        
+        timeout = setTimeout(fn, wait);    
+    }
+}
 
 // 调用函数
 scroll();
-gotop();
 changListDisplay();
 getSearchRelative();
 

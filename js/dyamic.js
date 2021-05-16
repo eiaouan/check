@@ -217,7 +217,7 @@ function loadSearchSongs(d,value) {
             + '</li>'
         ul.insertAdjacentHTML('beforeend', str);
     }
-    gotop();
+    document.documentElement.scrollTop = document.body.scrollTop = 0;
 }
 
 // 加载分页数目
@@ -256,7 +256,6 @@ function changeSearchPage(value){
     let numA = paB.querySelectorAll('a'); // 数字
     let paback = sPage.querySelector('.pa-b') // 上一页
     let panext = sPage.querySelector('.pa-n') // 下一页
-    console.log(numA);
      // 事件委托
      sPage.addEventListener('click',function(ev){
         let ele = ev.target;

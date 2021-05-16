@@ -1,9 +1,9 @@
 // https://music.163.com/song/media/outer/url?id=554241732.mp3
 
-let play = document.querySelector('#play'); // 播放按钮
-let playPic = document.querySelector('.play-pic'); // 播放条的图片
-let playSongName = document.querySelector('#play-song'); // 歌曲名称
-let playSinger = document.querySelector('#play-singer');// 歌手名称
+// let play = document.querySelector('#play'); // 播放按钮
+// let playPic = document.querySelector('.play-pic'); // 播放条的图片
+// let playSongName = document.querySelector('#play-song'); // 歌曲名称
+// let playSinger = document.querySelector('#play-singer');// 歌手名称
 let barSong = document.querySelector('#bar-song'); // 播放条中的audio标签
 
 // 立即调用，给播放条添加属性记录id和idList
@@ -112,9 +112,24 @@ function loadSongList(idList) {
                     }
                 li.innerHTML = date.songs[i].name + ' - ' + ars;
                 li.sid = date.songs[i].id;
-                li.addEventListener('click',function(){
-                    barSong.sid = li.sid;
-                    setSrc();
+                li.addEventListener('click',function(ev){
+                    let ele = ev.target;
+                    if(ele.tagName == 'SPAN'){
+                        // 遍历找出点击对应歌曲id对应是index
+                        let t = null;
+                        for(let i =0; i<barSong.idList.length;i++){
+                            if(barSong.idList[i] == li.sid){
+                                t = i;
+                                break;
+                            }
+                        }
+                        barSong.idList.splice(t+1,1);
+                        li.remove();
+                    }else {
+                        barSong.sid = li.sid;
+                        setSrc();
+                    }
+                    
                  })
                 ul.appendChild(li);
                 let span = document.createElement('span');
@@ -254,7 +269,6 @@ function playBack(){
  */
 function playNext(){
     this.index = this.idList.indexOf(this.sid);
-    console.log(this.index);
         setTimeout(() => {
             if(this.index == this.idList.length-1){
                 this.sid = this.idList[0];
@@ -303,9 +317,7 @@ function deleteid (){
         // 播放其中一首格
         if(ev.target.className.includes('playsong')){
             chuangeid(ev.target.parentNode.parentNode.sid);
-            console.log(ev.target.parentNode.parentNode.sid);
         }else if (ev.target.className.includes('addsong')){  // 添加到播放列表
-            console.log('add');
             addid(ev.target.parentNode.parentNode.sid)
         } else if (ev.target.className == 'play-rank-list'){       // 播放其中一个表单的歌曲，但是之前的歌曲会被覆盖
             let ul = ev.target.parentNode.parentNode.querySelector('ul'); // 获取ul
@@ -334,7 +346,33 @@ function deleteid (){
 
 })();
 
-// 监听热门推荐播放、添加歌单
+// 发送收藏歌单请求
+function collectList(id,type){
+    let cookie = localStorage.getItem('cookie')||sessionStorage.getItem('cookie');
+    if(!cookie){
+        let login = document.querySelector('.box-login');
+        login.style.display = 'block';
+        return ;
+    }
+    let d = {   // ajax参数
+        type : 'get',
+        url : 'https://autumnfish.cn/playlist/subscribe',
+        date : {
+            cookie: encodeURIComponent(cookie),
+            
+            t : type,
+            id : id,
+        },
+        success : function(date){
+            console.log(date);
+        }
+
+    }
+    ajax(d);
+}
+
+
+// 监听热门推荐播放、添加歌单,收藏歌单
 (function(){
     let hotb = document.querySelector('.hot');
     hotb.addEventListener('click',function(ev){
@@ -359,6 +397,7 @@ function deleteid (){
         }else if (ele.className == 'hot-list'){
             let lid = ele.parentNode.parentNode.listid;
             let fn = function(date){
+                console.log( date.privileges);
                 let idList = [];
                 for( let i = 0; i< date.privileges.length;i++){
                     idList[i] = date.privileges[i].id;
@@ -367,6 +406,9 @@ function deleteid (){
                 loadSongList(barSong.idList);
             }
             loadList({id : lid},fn);
+        } else if (ele.className == 'hot-collect'){
+            let lid = ele.parentNode.parentNode.listid;
+            collectList(lid,'1')
         }
     })
 })();
@@ -395,3 +437,22 @@ function getStyle(obj,attr){
         return getComputedStyle(obj,null)[attr];
     }
 }
+
+
+//  搜索界面播放、添加歌曲
+(function(){
+    let spage = document.querySelector('#search');
+    spage.addEventListener('click',function(ev){
+        let ele = ev.target;
+        if(ele.className == 's-play'){
+            console.log('play');
+            let id = ele.parentNode.parentNode.getAttribute('sid');
+            chuangeid(id);
+        }else if (ele.className == 's-add'){
+            console.log('add');
+            let id = ele.parentNode.parentNode.getAttribute('sid');
+            addid(id);
+        }
+
+    })
+})()
