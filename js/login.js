@@ -36,6 +36,7 @@ let numBtn = document.querySelector('#log-num');
 numBtn.addEventListener('click', function () {
     // 清空提示框和错误信息
     log2.querySelector('#account').value = '';
+    log2.querySelector('#password').value = '';
     err.style.display = 'none';
     logTop[1].querySelector('h4').innerHTML = '手机号登录';
     log2.querySelector('#account').setAttribute('placeholder', '请输入手机号');
@@ -163,22 +164,27 @@ function login(obj) {
         err.style.display = 'block';
         return false;
     }
-    console.log();
     let login = {
         type: 'post',
         url: obj.url,
         date: {
-            phone: numValue,
+            // phone : numValue,
             password: passValue,
         },
         header: {
             'Content-Type': 'application/json'
         },
         success: function (date) {
-            let inpA = box.querySelectorAll('input');
-            inpA.forEach(e=>{
-                e.value = '';
-            })
+            // let inpA = box.querySelectorAll('input');
+            // inpA.forEach(e=>{
+            //     e.value = '';
+            // })
+            console.log(date);
+            if(date.code == 200){
+
+            log2.querySelector('#account').value = '';
+            log2.querySelector('#password').value = '';
+            err.style.display = 'none';
             box.style.display = 'none';
             if(auto.checked){
                 console.log(date.cookie);
@@ -187,14 +193,27 @@ function login(obj) {
                 sessionStorage.setItem('cookie',date.cookie);
             }
             loadCookieInf() // 获取账号信息
+        }else if(date.code == 502){
+            span.innerHTML = '账号或密码错误';
+            err.style.display = 'block';
+        }
+
         },
         error: function (date) {
-            span.innerHTML = date.msg;
+            if(date.code == 501){
+                span.innerHTML = '该账号不存在';
+            } else {
+                span.innerHTML = date.msg;
+            }
             err.style.display = 'block';
-            console.log(date.token);
         }
     }
-    ajax(login)
+    if(obj.type == 'phone'){
+        login.date.phone = numValue;
+    }else if (obj.type == 'address'){
+        login.date.email = numValue;
+    }
+    ajax(login);
 }
 
 

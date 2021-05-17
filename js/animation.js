@@ -1,6 +1,6 @@
 // 防抖
 function debounce(fn, wait) {    
-    var timeout = null;    
+    let timeout = null;    
     return function() {        
         if(timeout !== null)   
         clearTimeout(timeout);        
@@ -10,13 +10,13 @@ function debounce(fn, wait) {
 
 // 推荐部分大轮播图
 function scroll() {
-    var box = document.querySelector('.box-reco');// 获取大框
-    var scr = document.querySelector('.scroll');// 获取中间的框
-    var ulDot = document.querySelector('.box-scr-dot')
-    var pic = document.querySelectorAll('.rec-pic'); //获取轮播的全部图片
-    var arrowL = document.querySelector('.arrow-l'); // 获取左箭头
-    var arrowR = document.querySelector('.arrow-r'); // 获取右箭头
-    var current = 0; // 表示当前显示的图片的num属性
+    let box = document.querySelector('.box-reco');// 获取大框
+    let scr = document.querySelector('.scroll');// 获取中间的框
+    let ulDot = document.querySelector('.box-scr-dot')
+    let pic = document.querySelectorAll('.rec-pic'); //获取轮播的全部图片
+    let arrowL = document.querySelector('.arrow-l'); // 获取左箭头
+    let arrowR = document.querySelector('.arrow-r'); // 获取右箭头
+    let current = 0; // 表示当前显示的图片的num属性
     // 给每一个图片添加大背景
     pic.forEach(e => {
         let url = e.firstElementChild.src;
@@ -36,7 +36,7 @@ function scroll() {
     // 先将第一个设置成红色
     ulDot.firstElementChild.style.backgroundColor = 'rgb(194,26,26)';
     // 获取每个点
-    var liDot = document.querySelectorAll('.box-scr-dot li');
+    let liDot = document.querySelectorAll('.box-scr-dot li');
     move(current);
     // 给每个元素设置一个监听事件让小圆点变红
     liDot.forEach(e=>{
@@ -74,7 +74,7 @@ function scroll() {
     }
     
     // 自动播放
-    var t = setInterval(() => {
+    let t = setInterval(() => {
         if (current < pic.length-1) {
             current++;
         } else {
@@ -118,7 +118,7 @@ function scroll() {
 
 // 回到顶部
 (function () {
-    var backTop = document.querySelector('.back-top');
+    let backTop = document.querySelector('.back-top');
     backTop.addEventListener('click', function () {
         gotop();
     })
@@ -134,8 +134,6 @@ function scr() {
     div.style.left = (- i * w ) + 'px'; // 显示第一张
     let arrowR = document.querySelector('.she-arrow-l');
     let arrowL = document.querySelector('.she-arrow-r');
-    let lt = null;  // 左边及时器
-    let rt = null ; //右边计时器
     let timer = null;
     // 监听左右箭头
     arrowL.addEventListener('click', function () {
@@ -160,7 +158,6 @@ function scr() {
                 div.style.left = div.style.left.substr(0,div.style.left.length-2)- speed + "px"; // 向左移动
             }
         }, 10)
-        console.log(i);
     }
     function moveR() {
         if (i == 1) {
@@ -186,9 +183,9 @@ scr();
 function gotop(){
     timer = setInterval(function(){
         //获取滚动条的滚动高度
-        var osTop = document.documentElement.scrollTop || document.body.scrollTop;
+        let osTop = document.documentElement.scrollTop || document.body.scrollTop;
         //用于设置速度差，产生缓动的效果
-        var speed = Math.floor(-osTop / 6);
+        let speed = Math.floor(-osTop / 6);
         document.documentElement.scrollTop = document.body.scrollTop = osTop + speed;
         isTop =true;  //用于阻止滚动事件清除定时器
         if(osTop <= 0){
@@ -199,8 +196,8 @@ function gotop(){
 
 // 播放列表
 function changListDisplay(){
-    var listButton = document.querySelector('.play-list');
-    var ul = document.querySelector('.song-list');
+    let listButton = document.querySelector('.play-list');
+    let ul = document.querySelector('.song-list');
     listButton.addEventListener('click',function(){
         if(!ul.style.display == 'none'){
             ul.style.display = 'none';
@@ -240,64 +237,7 @@ rankone.forEach(function (ele) {
 });
 
 
-// 搜索下拉框
-function getSearchRelative() {
-    // oninput
-    let rs = document.querySelector('.relative-search');  // 提示框
-    let input = document.querySelector('#index-sea');   // 搜索框
-    let timer = null;       // 用定时器设置防抖
-    input.addEventListener('input', function () {      // 输入事件
-        let value = document.querySelector('#index-sea').value;
-        if (timer) {
-            clearTimeout(timer);
-        }
-        timer = setTimeout(() => {
-            let inf = {
-                type: 'get',
-                url: 'https://autumnfish.cn/search/suggest',
-                date: {
-                    keywords: value
-                },
-                success: function (date) {
-                    rs.style.display = 'block';
-                    let boxA = document.querySelectorAll('.rs-m');
-                    for (e of boxA) {
-                        let t = e.getAttribute('type'); // 存放结果类型
-                        if (date.result.order.includes(t)) {  // 如果存在该类型的值，显示该类型的框，没有则不显示
-                            e.style.display = 'block';
-                            // date.result[t] 各类型的内容  
-                            let ul = e.querySelector('ul');     // 各类型下的ul
-                            for (let i = 0; i < date.result[t].length; i++) {  // 循环添加li
-                                let li = document.createElement('li');
-                                li.innerHTML = date.result[t][i].name;
-                                ul.appendChild(li);
-                            }
-                        } else {
-                            e.style.display = 'none';
-                        }
-                    }
-                },
-                error: function () {
-                    rs.style.display = 'none';
-                }
-            }
-            if (value) {  // 如果value为空就不发送请求
-                ajax(inf);
-            } else {
-                let ul = document.querySelectorAll('.rs-m ul')
-                ul.forEach(e => {
-                    e.innerHTML = '';
-                });
-                rs.style.display = 'none';
-            }
-            timer = null;
-        }, 500);
-    })
 
-    input.addEventListener('blur', function () {       // 增加一个失去焦点事件
-        rs.style.display = 'none';
-    })
-}
 
 
 // 适应
@@ -333,7 +273,7 @@ function getSearchRelative() {
 })()
 
 function debounce(fn, wait) {    
-    var timeout = null;    
+    let timeout = null;    
     return function() {        
         if(timeout !== null)   
         clearTimeout(timeout);        

@@ -51,18 +51,18 @@
     background: #eee;
 }
 
-.s-cl-on {
-    color: #fff;
-    background: salmon;
+.s-class .s-cl-on {
+    /* color: #fff; */
+    border-bottom: 3px solid red ;
 }
 
 .s-class .s-cl-on:hover{
-    background: salmon;
+    background: #ddd;
 }
 
 .s-res li {
-    border-radius: 5px;
     margin: 5px;
+    border-bottom: 2px solid #ddd;
 }
 
 .s-res li span{
@@ -75,11 +75,11 @@
 }
 
 .s-res-odd {
-    background: #ccc;
+    background: #fff;
 }
 
 .s-res-even {
-    background: salmon;
+    background: #fff;
 }
 
 .s-name {
@@ -104,7 +104,7 @@
     width: 20px;
     height: 20px;
     margin: 0 15px;
-    color: #fff ;
+    color: #aaa ;
     font-family: 'icomoon';
     cursor: pointer;
 }
@@ -163,6 +163,6 @@
 }
 
 .s-page .pa-on {
-    background: salmon;
+    background: red;
     color: #fff;
 }

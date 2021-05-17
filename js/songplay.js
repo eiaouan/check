@@ -1,32 +1,28 @@
 // https://music.163.com/song/media/outer/url?id=554241732.mp3
 
-// let play = document.querySelector('#play'); // 播放按钮
-// let playPic = document.querySelector('.play-pic'); // 播放条的图片
-// let playSongName = document.querySelector('#play-song'); // 歌曲名称
-// let playSinger = document.querySelector('#play-singer');// 歌手名称
 let barSong = document.querySelector('#bar-song'); // 播放条中的audio标签
 
 // 立即调用，给播放条添加属性记录id和idList
 (function(){
 let barSong = document.querySelector('#bar-song'); // 播放条中的audio标签
 let idList = [
-    '1837817804',
-    '461347998',
-    '518066366',
-    '2872411',
-    '17950534',
-    '20087060',
-    '3885379',
-    '31010564',
-    '35416168',
-    '422132125',
-    '354352',
-    '26667946',
-    '33291435',
+    1837817804,
+    461347998,
+    518066366,
+    2872411,
+    17950534,
+    20087060,
+    3885379,
+    31010564,
+    35416168,
+    422132125,
+    354352,
+    26667946,
+    33291435,
 ];
 barSong.idList = idList;  // 把id数组存入播放条的idList属性中
 barSong.sid = '1837817804'   // 添加一个默认的歌曲id
-barSong.index = 0;          // 顺序播放的计数器
+barSong.index = 1;          // 顺序播放的计数器
 loadSongList(barSong.idList); // 加载播放列表
 
 let play = document.querySelector('#play'); // 播放按钮
@@ -190,6 +186,7 @@ function playSong() {
         let currentTime = document.querySelector('#play-time'); // 已播放时间
         let bar = document.querySelector('.progress-bar'); // 进度条总长度
         let currentBar = document.querySelector('#bar-white'); // 已播放
+        let btn = currentBar.querySelector('span'); // 拖动点 
         let dSecond = Math.floor(barSong.duration % 60); // 歌曲时间长度的秒数
         if (dSecond < 10) {
             dSecond = '0' + dSecond;
@@ -204,9 +201,16 @@ function playSong() {
             currentTime.innerHTML = Math.floor(barSong.currentTime / 60) + ':' + cSecond + ' /';
             currentBar.style.width = Math.floor(bar.offsetWidth * (barSong.currentTime / barSong.duration)) + 10 + 'px';
         }, 500);
+        
         bar.addEventListener('click', function (e) {
             barSong.currentTime = barSong.duration * (e.offsetX / bar.offsetWidth);
-        })
+        });
+        currentBar.addEventListener('mousmove',function(e){
+            let movex = e.clientX - currentBar.offsetX;
+            let positionX = (currentBar.offsetWidth + movex > bar.offsetWidth) ? bar.offsetWidth : (currentBar.offsetWidth + moveX < 0) ? 0 : currentBar.offsetWidth + moveX;
+            barSong.currentTime = barSong.duration * (positionX / bar.offsetWidth);
+        });
+        
 
     })
 
@@ -225,6 +229,9 @@ function setSrc(){
     play.flag =0;
     playSong();
     setNowSongStyle();
+    if(location.hash == '#/playpage'){
+        loadPlayPage();
+    }
 };
 
 // 顺序播放
@@ -381,7 +388,6 @@ function collectList(id,type){
             let lid = ele.parentNode.parentNode.listid;
             let fn = function(date){
                 let idList = [];
-                console.log(date.privileges);
                 for( let i = 0; i< date.privileges.length;i++){
                     idList[i] = date.privileges[i].id;
                 }
@@ -397,7 +403,6 @@ function collectList(id,type){
         }else if (ele.className == 'hot-list'){
             let lid = ele.parentNode.parentNode.listid;
             let fn = function(date){
-                console.log( date.privileges);
                 let idList = [];
                 for( let i = 0; i< date.privileges.length;i++){
                     idList[i] = date.privileges[i].id;
@@ -445,14 +450,142 @@ function getStyle(obj,attr){
     spage.addEventListener('click',function(ev){
         let ele = ev.target;
         if(ele.className == 's-play'){
-            console.log('play');
             let id = ele.parentNode.parentNode.getAttribute('sid');
             chuangeid(id);
         }else if (ele.className == 's-add'){
-            console.log('add');
             let id = ele.parentNode.parentNode.getAttribute('sid');
             addid(id);
         }
 
     })
 })()
+
+
+// 播放详情页面跳转
+
+function loadPlayPage() {
+    // 获得图片 url();
+    // let url = document.querySelector('.play-pic').style.backgroundImage;
+    let url = null;
+    let d = {
+        type : 'get',
+        header : {
+            contentType : 'application/json'
+        },
+        url : 'https://autumnfish.cn/song/detail',
+        date: {
+            ids : barSong.sid,
+        },
+        success : function(date){
+            url = date.songs[0].al.picUrl;
+            let src = url;
+            let pic = document.querySelector('.pg-pic img');
+            pic.src = src;
+            // 发送请求获得歌词，之后调用processLyric()填入歌词
+            getlyric();
+    //
+        }
+    }
+    ajax(d);
+    
+
+}
+    // 发送请求获得歌词
+function getlyric() {
+     
+    let d = {
+        type: 'get',
+        url : 'https://autumnfish.cn/lyric',
+        date : {
+            id : barSong.sid,
+        },
+        success : function(date){
+    // 处理歌词，填入html，滚动
+            processLyric(date);
+        },
+        error : function(date){
+            console.log(date.msg);
+        },
+    }
+    ajax(d);
+}
+function processLyric(date){
+    // 切分歌词，返回对象数组 spliceLyric()  [{time: ,lrc :},{},{}]
+    let la = splitLyric(date.lrc.lyric);  // 对象数组
+    // 添加进ul中
+    let ul = document.querySelector('#playpage ul');
+    ul.innerHTML = '';
+    ul.style.marginTop = 0 ;
+    for(i of la){
+        let li = document.createElement('li');
+        li.innerHTML = i.lrc;
+        ul.appendChild(li);
+    }
+    // 滚动
+    // 设置监听
+        barSong.addEventListener('timeupdate',lyricScroll(la));
+        let div = document.querySelector('.lyric') // 显示歌词的地方
+        div.addEventListener('mouseenter',function(){
+            // 给给滚动事件解绑
+            barSong.removeEventListener('timeupdate',lyricScroll(la),false)
+            div.style.overflowY = 'scroll';
+            ul.style.marginTop = '0';
+            
+        });
+        div.addEventListener('mouseleave',function(){
+            // 给给滚动事件解绑
+            barSong.addEventListener('timeupdate',function(){
+            lyricScroll(la);
+            },false)
+            div.scrollTop = 0;
+            div.style.overflow = 'hidden';
+        })
+};
+
+function splitLyric(ly){
+    let split1 = ly.split('\n')
+    for (let i = 0; i < split1.length-2; i++) {
+        let lrcArr = split1[i];
+        split1[i] = change(lrcArr);
+        function change(str) {
+            let lrc = str.split(']');
+            let timer = lrc[0].replace('[', '');
+            let strmusic = lrc[1];
+            let timesplit = timer.split(':');
+            let s = +timesplit[1];
+            let min = +timesplit[0];
+            return {
+                time: min * 60 + s,
+                lrc: strmusic//分割好到歌词和时间
+            }
+
+        }
+    }
+    return split1;
+}
+    // 让歌词滚动
+// 获取当前的li
+    function setCurrentLI(la){
+        let time = barSong.currentTime;
+        for(let j = 0; j<la.length;j++){
+            if(time <= la[j].time){
+                return j;
+            }
+        }
+        return 0;
+       }
+function lyricScroll(la){  
+//    滚动 设置ul的top
+    let ul = document.querySelector('#playpage ul');
+    let li = ul.querySelector('li');
+    let div = document.querySelector('.lyric');
+   let i =  setCurrentLI(la);
+   let top = 0;
+   if (i) {
+    top = li.offsetHeight*i - div.offsetHeight / 2 + li.offsetHeight / 2; 
+   }else {
+    top = 0;
+   }
+   ul.style.marginTop =  (- top) + 'px';
+}
+

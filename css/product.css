@@ -90,6 +90,10 @@
     background: linear-gradient(#fff,rgba(202, 202, 202, 0.2)); 
 }
 
+.box-hot {
+    height: 290.9px;
+}
+
 .hot-title,
 .shelves-title,
 .singer-title,
@@ -429,6 +433,19 @@
     font-size: 14px;
 }
 
+.rank>a {
+    display: inline-block;  
+    width: 55%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 14px;
+}
+
+.rank-on>a {
+    width: 20%;
+}
+
 .singer-name a {
     width: 80px;
 }
@@ -504,4 +521,66 @@
     font-size: 18px;
     color: rgb(245, 241, 241);
     vertical-align: middle;
+}
+
+
+/* 播放详情 */
+
+/* 入口 */
+.play-pic a {
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+}
+
+.pg-pic {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    margin: 32px auto;
+}
+
+.pg-pic img {
+    width: 100%;
+}
+
+.pic-coast {
+    position: absolute;
+    top: -10px;
+    left: -7px;
+    width: 223px;
+    height: 217px;
+    background: url(../images/base/coverall.png),no-repeat;
+    background-position: 0px 25%;
+}
+
+#playpage {
+    display: none;
+}
+
+#playpage ul {
+    margin: 0 auto;
+    text-align: center
+}
+
+#playpage ul li {
+    padding: 8px 0;
+}
+
+.lyric {
+    width: 250px;
+    height: 300px;
+    margin: 0 auto;
+    margin-top: 0px;
+    overflow: hidden;
+    /* background:  linear-gradient(0deg, rgba(60,60,60,0.5), #fff 50%, rgba(60,60,60,0.5)) */
+}
+
+.lyric::-webkit-scrollbar{
+    width: 5px;
+    background-color: initial;
+}
+
+.lyric::-webkit-scrollbar-thumb {
+    background: rgb(105, 104, 104);
 }
