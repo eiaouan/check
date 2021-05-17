@@ -179,7 +179,6 @@ function login(obj) {
             // inpA.forEach(e=>{
             //     e.value = '';
             // })
-            console.log(date);
             if(date.code == 200){
 
             log2.querySelector('#account').value = '';

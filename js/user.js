@@ -90,7 +90,6 @@ function sendUserListRequest(uid,page){
             offset : limit*(page-1),
         },
         success : function(date){
-            console.log(date);
             if(date.playlist.length != 0){
                 loadUserList(date);
             }else{
