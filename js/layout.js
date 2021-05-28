@@ -10,6 +10,7 @@ function onHashChange() {
     let user = document.querySelector('#user');
     let playpage = document.querySelector('#playpage');
     let footer = document.querySelector('footer');
+    let video = document.querySelector('#video');
     let pages = document.querySelectorAll('.page');
     switch (location.hash) {
         case '#/index': {
@@ -43,6 +44,13 @@ function onHashChange() {
             loadPlayPage(); // 点击之后再加载
             break;
         }
+        case '#/video' :{
+            pages.forEach(e => {
+                e.style.display = 'none';  // 隐藏其他页面
+            });
+            video.style.display = 'block';
+            break;
+        }
     }
     document.documentElement.scrollTop = document.body.scrollTop = 0; // 加载后回到顶部
     if (location.hash != '#/index') {  // 隐藏子导航
@@ -62,6 +70,16 @@ function onHashChange() {
     }
     if(location.hash != '#/playpage'){
         footer.style.display = 'block';
+    }
+    if(location.hash == '#/video'){
+        let player = document.querySelector('.box-play');
+        player.style.display = 'none';
+        occub.style.display = 'none'
+    }else{
+        let player = document.querySelector('.box-play');
+        let occub = document.querySelector('.occub');
+        player.style.display = 'block';
+        occub.style.display = 'block';
     }
 }
 

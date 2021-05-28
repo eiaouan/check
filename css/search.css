@@ -129,6 +129,29 @@
     font-size: 12px;
 }
 
+.s-res .s-mvs {
+    display: inline-block;
+    border: none;
+    width: 200px;
+    height: 180px;
+    margin: 19px;
+}
+
+.s-mvs>div {
+    width: 100%;
+    height: 130px;
+    overflow: hidden;
+}
+
+.s-res .s-mvs img {
+    width: 100%;
+}
+
+.s-res .s-mvs .s-mvs-art {
+    color: #aaa;
+    font-size: 12px;
+}
+
 /* 分按钮 */
 .s-page {
     width: 500px;

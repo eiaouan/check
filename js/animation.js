@@ -284,5 +284,4 @@ function debounce(fn, wait) {
 // 调用函数
 scroll();
 changListDisplay();
-getSearchRelative();
-
+// getSearchRelative();

@@ -13,7 +13,8 @@
     <link rel="stylesheet" href="css/product.css">
     <link rel="stylesheet" href="css/user.css">
     <link rel="stylesheet" href="css/search.css">
-    <!-- <link rel="shortcut icon" href="images/base/favicon (1).ico" type="image/x-icon"> -->
+    <link rel="stylesheet" href="css/video.css">
+    <link rel="shortcut icon" href="images/base/favicon (1).ico" type="image/x-icon">
     <title>网易云音乐</title>
     <style>
 
@@ -532,8 +533,8 @@
                 <div class="up-rank rankone" tag='19723756'>
                     <div class="rank-top">
                         <h2>飙升榜</h2>
-                        <span title="添加到播放列表" class="play-rank-list"></span>
-                        <span title="播放" class="add-rank-list"></span>
+                        <span title="添加到播放列表" class="add-rank-list"></span>
+                        <span title="播放" class="play-rank-list"></span>
                     </div>
                     <ul>
                         <li class="rank rank-on">
@@ -642,8 +643,8 @@
                 <div class="new-rank rankone" tag='3779629'>
                     <div class="rank-top">
                         <h2>新歌榜</h2>
-                        <span title="添加到播放列表" class="play-rank-list"></span>
-                        <span title="播放" class="add-rank-list"></span>
+                        <span title="添加到播放列表" class="add-rank-list"></span>
+                        <span title="播放" class="play-rank-list"></span>
                     </div>
                     <ul>
                         <li class="rank rank-on">
@@ -752,8 +753,8 @@
                 <div class="ori-rank rankone" tag='2884035'>
                     <div class="rank-top">
                         <h2>原创榜</h2>
-                        <span title="添加到播放列表" class="play-rank-list"></span>
-                        <span title="播放" class="add-rank-list"></span>
+                        <span title="添加到播放列表" class="add-rank-list"></span>
+                        <span title="播放" class="play-rank-list"></span>
                     </div>
                     <ul>
                         <li class="rank rank-on">
@@ -871,10 +872,10 @@
         <span class="s-tip">搜索“”，找到 9999 首单曲</span>
         <div class="s-class">
             <ul>
-                <li class="s-cl-on">单曲</li>
+                <li class="s-cl-on" id="ss">单曲</li>
                 <li>歌手</li>
                 <li>专辑</li>
-                <li>视频</li>
+                <li class="s-mv">视频</li>
                 <li>歌词</li>
                 <li>歌单</li>
                 <li>声音主播</li>
@@ -883,6 +884,7 @@
         </div>
         <div class="s-res">
             <ul>
+                <!-- 单曲 -->
                 <!-- <li>
                 <span class="s-name">something</span>
                 <div class="s-ico">
@@ -893,7 +895,15 @@
                 <span class="s-alu">ZZZ</span>
                 <span class="s-leng">00:00</span>
             </li> -->
-
+            <!-- mv -->
+            <!-- <li class="s-mvs">
+                <div>
+                <img src="images/base/109951165647004069.jpg" alt="">
+                </div>
+                <p class="">......</p>
+                <p class="s-mvs-art">.....</p>
+            </li> -->
+            <!-- <a herf="mv.html" target="_blank"></a> -->
             </ul>
         </div>
         <div class="s-page">
@@ -1000,6 +1010,33 @@
             <div class="ul-coast"></div>
         </div>
     </div>
+    <div id="video" class="page w">
+        <!-- <h1>视频标题</h1>
+        <p class="v-art">作者</p> -->
+        <div class="b-v">
+            <video src="" id="vv" controls ></video>
+        </div>
+        <div class="v-fake">
+            <img src="images/base/0529005604.png" alt="">
+        </div>
+        <!-- 评论 -->
+        <div class="b-comment">
+            <div class="com-title">
+                <h3>评论</h3>
+            </div>
+            <ul>
+                <!-- <li class="v-com">
+                    <div>
+                        <img src="images/base/coverall.png" alt="">
+                        <p>xxx</p>
+                    </div>
+                    <div class="com-con">hhhhhhhhhhhhhh</div>
+                    <span class="com-g"></span>
+                </li> -->
+                
+            </ul>
+        </div>
+    </div>
     <footer>
         <div class="w">
             <div class="btu">
@@ -1077,7 +1114,7 @@
                     <div id="play-singer">满舒克</div>
                 </div>
                 <div class="progress-bar">
-                    <div id="bar-white">
+                    <div class="bar-white">
                         <span></span>
                     </div>
                     <div></div>
@@ -1088,7 +1125,15 @@
                 <div id="song-time">00:00</div>
             </div>
             <div id="collect"></div>
-            <div id="void-set"></div>
+            <div class="b-voice">
+                <div id="voice-set">
+                </div>
+                <div class="voice-bar">
+                    <div class="bar-white">
+                        <span></span>
+                    </div>
+                </div>
+            </div>
             <div class="play-set"></div>
             <div class="play-list">
                 <ul class="song-list">
@@ -1188,6 +1233,7 @@
     <script type="text/javascript" src="js/dyamic.js"></script>
     <script type="text/javascript" src="js/login.js" async defer></script>
     <script type="text/javascript" src="js/user.js" async defer></script>
+    <script type="text/javascript" src="js/mv.js" async defer></script>
 </body>
 
 </html>

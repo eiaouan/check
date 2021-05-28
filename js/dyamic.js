@@ -150,18 +150,20 @@ function loadList (da,callBack){
  * @param {string} value 用户输入的查询值
  * @param {number} page 页码
  * @param {function} callBack 回调函数
+ * @param {number} t 搜索类型
  */
 
-function sendSearchRequest(value,page,callBack){
+function sendSearchRequest(value,page,callBack,t){
     const limit = 15;
     let offset = limit*(page-1); // 计算偏移量
+    let type = t ||1;
     let det = {     // ajax参数对象
         type: 'post',
         url: 'https://autumnfish.cn/search',
         date: {
             keywords: value,
             limit: limit,
-            type: 1,
+            type: type,
             offset: offset, // 分页
         },
         header : {
@@ -177,10 +179,6 @@ function sendSearchRequest(value,page,callBack){
     }
     ajax(det);
     location.hash = '#/search' ;
-}
-
-
-window.onload = function(){
 }
 
 /**
@@ -267,8 +265,10 @@ function changeSearchPage(value) {
     paback.disabled = true;
     paB.tn = paB.tn || 1;
     let last = paB.lastElementChild.innerHTML
+    // 清除
     // 事件委托
-    sPage.addEventListener('mouseup', function (ev) {
+    sPage.onmouseup = function(ev){
+    // sPage.addEventListener('mouseup', function (ev) {
         let ele = ev.target;
         //    判断点击的类型
         if (ele.tagName == 'A') {  // 如果点击的是数字
@@ -276,6 +276,7 @@ function changeSearchPage(value) {
         } else if (ele.className == 'pa-b') {
             paB.tn -= 1;
         } else if (ele.className == 'pa-n') {
+            console.log('+1');
             paB.tn += 1;
         }
         //    判断button是否被禁用
@@ -289,7 +290,7 @@ function changeSearchPage(value) {
         } else {
             panext.disabled = false;
         };
-        if(paB.tn > 3 && paB.tn < last-3){
+        if(paB.tn > 6 && paB.tn < last-3){
             paB.innerHTML = '<a href="#" class="pa-on">1</a><span>...<span>';
             for(let i = paB.tn-2; i< paB.tn+3;i++){
                 let n = document.createElement('a');
@@ -314,6 +315,20 @@ function changeSearchPage(value) {
             let La = document.createElement('a');
             La.innerHTML = last;
             paB.appendChild(La);
+        }else if(paB.tn<6){
+            paB.innerHTML = '<a href="#" class="pa-on">1</a>';
+            for(let i = 2; i<= 6;i++){
+                let n = document.createElement('a');
+                n.innerHTML = i;
+                n.href = 'javascript:;'
+                paB.appendChild(n);
+            }
+            let span = document.createElement('span');
+            span.innerHTML = '...'
+            let La = document.createElement('a');
+            La.innerHTML = last;
+            paB.appendChild(span);
+            paB.appendChild(La);
         }
         let numA = paB.querySelectorAll('a'); // 数字
         numA.forEach(e => {
@@ -325,7 +340,8 @@ function changeSearchPage(value) {
         })
          
         sendSearchRequest(value, paB.tn) // 重新发送请求并且加载页面
-    })
+    // })
+    }
 }
 
 // 搜索下拉框
@@ -406,3 +422,110 @@ function getSearchRelative() {
         }
     })
 })()
+
+
+/**
+ * 
+ * @param {number} pn 转跳的数字
+ * @param {*} count 总页数
+ * @returns 放回一个元素
+ */
+function SetPage(pn,count){
+    let box = document.createElement('div'); // 大盒子
+    box.pn = pn;
+    box.count = count;
+    box.ul = document.createElement('ul'); //  装数字
+    box.btnl = document.createElement('button') // 上一页
+    box.btnl.value = '上一页'
+    box.btnr = document.createElement('button') // 下一页
+    box.btnr.value = '下一页'
+    box.appendChild(box.btnl);
+    box.appendChild(box.ul);
+    box.appendChild(box.btnr);
+    // 判断禁止案件
+    box.disabled = disabled.bind(box);
+    box.disabled();
+    box.loadpnum = loadpnum.bind(box);
+    return box;
+}
+
+let t = SetPage(1,10);
+console.log(t);
+
+// 判读按键不能使用
+function disabled(){
+    if(this.pn == 1){
+        this.btnl.disabled = true;
+    }else {
+        this.btnl.disabled = false;
+    }
+    if(this.pn == this.count){
+        this.btnr.disabled = true;
+    }else  {
+        this.btnl.disabled = false;
+    }
+}
+
+// 加载ul中的页数
+function loadpnum(){
+    let ul = this.ul;
+    if(this.count <= 7 ){
+        for(let i = 1 ; i <= this.count;i++ ){
+            let li = document.querySelector('li'); // 建一个li
+            li.innerHTML = i;
+            // 设置样式
+            li.className = '';
+            ul.appendChild(li); // 连接上ul
+        }
+    }else if(this.count > 7 && this.pn < this.count-4){
+        if(this.pn <= 4){
+            for(let i = 1 ; i <= 7;i++ ){ // 连接7个
+                let li = document.querySelector('li'); // 建一个li
+                li.innerHTML = i;
+                // 设置样式
+                li.className = '';
+                ul.appendChild(li); // 连接上ul
+            }
+            let span = document.createElement('span');
+            span.innerHTML = '...';
+            ul.appendChild(span);
+            let la = document.createElement('li');
+            la.innerHTML = this.count; // 最后一个数
+            ul.appendChild(la);
+        }else if(this.pn > 4 && this.pn<this.count-4) {
+            let f = document.createElement('li'); // 第一个
+            f.innerHTML = '1';
+            ul.appendChild(f);
+            let span = document.createElement('span');
+            span.innerHTML = '...';
+            ul.appendChild(span);
+            for(let i = this.pn-3 ; i <= this.pn+3;i++ ){ // 连接7个
+                let li = document.querySelector('li'); // 建一个li
+                li.innerHTML = i;
+                // 设置样式
+                li.className = '';
+                ul.appendChild(li); // 连接上ul
+            }
+            let span = document.createElement('span');
+            span.innerHTML = '...';
+            ul.appendChild(span);
+            let la = document.createElement('li');
+            la.innerHTML = this.count; // 最后一个数
+            ul.appendChild(la);
+        } else if(this.pn > 4 &&this.pn > this.count-4){
+            let f = document.createElement('li'); // 第一个
+            f.innerHTML = '1';
+            ul.appendChild(f);
+            let span = document.createElement('span');
+            span.innerHTML = '...';
+            ul.appendChild(span);
+            for(let i = this.pn-7 ; i <= this.count ;i++ ){ // 连接7个
+                let li = document.querySelector('li'); // 建一个li
+                li.innerHTML = i;
+                // 设置样式
+                li.className = '';
+                ul.appendChild(li); // 连接上ul
+            }
+        }
+    } 
+}

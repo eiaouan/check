@@ -124,7 +124,7 @@ confirm.addEventListener('click', function () {
     // 设置登录参数，根据不同的登录方式传递不同对象
     let logByNum = {
         tip: '手机号',
-        reg: /^0{0,1}(13[0-9]|15[0-9])[0-9]{8}$/,
+        reg: /^1[3|4|5|7|8]\d{9}$/,
         url: 'https://autumnfish.cn/login/cellphone',
         // 需要传给ajax的参数
         type: 'phone',
