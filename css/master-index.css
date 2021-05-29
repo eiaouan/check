@@ -511,7 +511,7 @@ footer button {
     position: absolute;
     top: 0;
     /* display: inline-block; */
-    width: 100px;
+    width: 0px;
     height: 100%;
     background: #eee;
     border-radius: 4px 0 0 4px

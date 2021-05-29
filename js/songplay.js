@@ -154,11 +154,13 @@ function playSong() {
     if (!play.flag) {
         setTimeout(function () {
             barSong.play();
+                // barSong.seti();
         }, 200);
         play.style.backgroundPosition = '0px -163px'
         play.flag = 1;
     } else if (play.flag) {
         barSong.pause();
+        // clearInterval(barSong.timerw);
         play.style.backgroundPosition = '0px -202px'
         play.flag = 0;
     }
@@ -182,8 +184,6 @@ function playSong() {
 (function () {
     barSong.addEventListener('canplaythrough', function () {
         let duration = document.querySelector('#song-time'); // 歌曲时间长度
-        let currentTime = document.querySelector('#play-time'); // 已播放时间
-        let bar = document.querySelector('.progress-bar'); // 进度条总长度
         let currentBar = document.querySelector('.bar-white'); // 已播放
         let btn = currentBar.querySelector('span'); // 拖动点 
         let dSecond = Math.floor(barSong.duration % 60); // 歌曲时间长度的秒数
@@ -192,15 +192,10 @@ function playSong() {
         }
         duration.innerHTML = Math.floor(barSong.duration / 60) + ':' + dSecond;
 
-        setInterval(function () {
-            let cSecond = Math.floor(barSong.currentTime % 60); // 已播放的时间的秒数
-            if (cSecond < 10) {
-                cSecond = '0' + cSecond;
-            }
-            currentTime.innerHTML = Math.floor(barSong.currentTime / 60) + ':' + cSecond + ' /';
-            currentBar.style.width = Math.floor(bar.offsetWidth * (barSong.currentTime / barSong.duration))  + 'px';
-        }, 500);
-
+        
+        barSong.addEventListener('timeupdate',tu)
+        
+        // barSong.seti();
         // bar.addEventListener('click', function (e) {
         //     if(e.target.tagName != 'SPAN'){
         //         barSong.currentTime = barSong.duration * (e.offsetX / bar.offsetWidth);
@@ -212,6 +207,19 @@ function playSong() {
 
 
 })();
+// timeupdate 的回调函数
+function tu(){
+    let currentTime = document.querySelector('#play-time'); // 已播放时间
+    let currentBar = document.querySelector('.bar-white'); // 已播放
+    let cSecond = Math.floor(barSong.currentTime % 60); // 已播放的时间的秒数
+    let bar = document.querySelector('.progress-bar'); // 进度条总长度
+        if (cSecond < 10) {
+            cSecond = '0' + cSecond;
+        }
+        currentTime.innerHTML = Math.floor(barSong.currentTime / 60) + ':' + cSecond + ' /';
+        currentBar.style.width = Math.floor(bar.offsetWidth * (barSong.currentTime / barSong.duration))  + 'px';
+}
+
 
 // barSong 的src的拼接函数 （可以换成获取歌曲url的接口）
 // 点击列表切换歌曲
@@ -656,14 +664,13 @@ function lyricScroll(la) {
     if (i) {
         top = li.offsetHeight * i - div.offsetHeight / 2 + li.offsetHeight / 2;
         liA.forEach(e => {
-            e.style.background = 'white'
+            e.style.color = 'black'
         })
-        liA[i].style.backgroundColor = 'red';
+        console.log(i,liA[i]);
+        liA[i].style.color = 'red';
     } else {
         top = 0;
     }
 
     ul.style.marginTop = (- top) + 'px';
 }
-
-

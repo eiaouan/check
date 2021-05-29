@@ -171,6 +171,8 @@ function sendSearchRequest(value,page,callBack,t){
         },
         success: function (d) {
             loadSearchSongs(d, value);
+            let ss = document.querySelector('#ss');
+            ss.change();
             callBack&&callBack(d.result.songCount, limit,value);
         },
         error: function (d) {
@@ -430,27 +432,50 @@ function getSearchRelative() {
  * @param {*} count 总页数
  * @returns 放回一个元素
  */
-function SetPage(pn,count){
+function SetPage(pn,count,callBack){
     let box = document.createElement('div'); // 大盒子
+    box.className = 'b-page'    //  设置样式
     box.pn = pn;
     box.count = count;
     box.ul = document.createElement('ul'); //  装数字
     box.btnl = document.createElement('button') // 上一页
-    box.btnl.value = '上一页'
+    box.btnl.className = 'btnl';
+    box.btnl.innerHTML = '上一页'
     box.btnr = document.createElement('button') // 下一页
-    box.btnr.value = '下一页'
+    box.btnr.className = 'btnr';
+    box.btnr.innerHTML = '下一页'
     box.appendChild(box.btnl);
     box.appendChild(box.ul);
     box.appendChild(box.btnr);
     // 判断禁止案件
     box.disabled = disabled.bind(box);
     box.disabled();
-    box.loadpnum = loadpnum.bind(box);
+    box.loadpnum = loadpnum.bind(box,callBack);
+    box.loadpnum();
+    box.addEventListener('mouseup',function(ev){
+        let ele = ev.target;
+        if (ele.tagName == 'LI') {
+            box.pn = parseInt(ele.innerHTML) ;
+            box.disabled();
+            box.loadpnum();
+            callBack&&callBack();
+
+        } else if (ele.className == 'btnl') {
+            box.pn -= 1;
+            box.disabled();
+            box.loadpnum();
+            callBack&&callBack();
+        } else if (ele.className == 'btnr') {
+            box.pn += 1;
+            box.disabled();
+            box.loadpnum();
+            callBack&&callBack();
+        }
+
+    })
+    console.log(box);
     return box;
 }
-
-let t = SetPage(1,10);
-console.log(t);
 
 // 判读按键不能使用
 function disabled(){
@@ -462,16 +487,19 @@ function disabled(){
     if(this.pn == this.count){
         this.btnr.disabled = true;
     }else  {
-        this.btnl.disabled = false;
+        this.btnr.disabled = false;
     }
 }
 
 // 加载ul中的页数
-function loadpnum(){
+function loadpnum(callBack){
     let ul = this.ul;
+    ul.innerHTML ='';
+    console.log( typeof(this.pn) ,typeof(this.count));
+    // this.pn = 
     if(this.count <= 7 ){
         for(let i = 1 ; i <= this.count;i++ ){
-            let li = document.querySelector('li'); // 建一个li
+            let li = document.createElement('li'); // 建一个li
             li.innerHTML = i;
             // 设置样式
             li.className = '';
@@ -480,10 +508,10 @@ function loadpnum(){
     }else if(this.count > 7 && this.pn < this.count-4){
         if(this.pn <= 4){
             for(let i = 1 ; i <= 7;i++ ){ // 连接7个
-                let li = document.querySelector('li'); // 建一个li
+                let li = document.createElement('li'); // 建一个li
                 li.innerHTML = i;
                 // 设置样式
-                li.className = '';
+                li.className = 'p-li';
                 ul.appendChild(li); // 连接上ul
             }
             let span = document.createElement('span');
@@ -493,26 +521,28 @@ function loadpnum(){
             la.innerHTML = this.count; // 最后一个数
             ul.appendChild(la);
         }else if(this.pn > 4 && this.pn<this.count-4) {
+            console.log('12');
             let f = document.createElement('li'); // 第一个
             f.innerHTML = '1';
             ul.appendChild(f);
             let span = document.createElement('span');
             span.innerHTML = '...';
             ul.appendChild(span);
-            for(let i = this.pn-3 ; i <= this.pn+3;i++ ){ // 连接7个
-                let li = document.querySelector('li'); // 建一个li
+            for(let i = this.pn-3 ; i <= this.pn + 3; i++ ){ // 连接7个
+                let li = document.createElement('li'); // 建一个li
                 li.innerHTML = i;
                 // 设置样式
-                li.className = '';
+                li.className = 'p-li';
                 ul.appendChild(li); // 连接上ul
             }
-            let span = document.createElement('span');
-            span.innerHTML = '...';
-            ul.appendChild(span);
+            let spanl = document.createElement('span');
+            spanl.innerHTML = '...';
+            ul.appendChild(spanl);
             let la = document.createElement('li');
             la.innerHTML = this.count; // 最后一个数
             ul.appendChild(la);
         } else if(this.pn > 4 &&this.pn > this.count-4){
+            console.log('13');
             let f = document.createElement('li'); // 第一个
             f.innerHTML = '1';
             ul.appendChild(f);
@@ -520,12 +550,38 @@ function loadpnum(){
             span.innerHTML = '...';
             ul.appendChild(span);
             for(let i = this.pn-7 ; i <= this.count ;i++ ){ // 连接7个
-                let li = document.querySelector('li'); // 建一个li
+                let li = document.createElement('li'); // 建一个li
                 li.innerHTML = i;
                 // 设置样式
-                li.className = '';
+                li.className = 'p-li';
                 ul.appendChild(li); // 连接上ul
             }
         }
-    } 
+    } else if(this.count > 7 && this.pn >= this.count-4){
+        console.log('14');
+        let f = document.createElement('li'); // 第一个
+            f.innerHTML = '1';
+            ul.appendChild(f);
+            let span = document.createElement('span');
+            span.innerHTML = '...';
+            ul.appendChild(span);
+            for(let i = this.pn-4 ; i <= this.count ;i++ ){ // 连接7个
+                let li = document.createElement('li'); // 建一个li
+                li.innerHTML = i;
+                // 设置样式
+                li.className = 'p-li';
+                ul.appendChild(li); // 连接上ul
+            }
+    }
+    // 设置目标样式
+    let liA = this.ul.querySelectorAll('li');
+    liA.forEach(e=>{
+        e.className = 'p-li';
+        if(e.innerHTML == String(this.pn) ){
+            e.className = 'p-li pa-on'
+        }
+    })
+    // callBack&&callBack();
+
+    // this.ul = ul;
 }

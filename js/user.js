@@ -108,7 +108,7 @@ function loadUserList(d){
     let lmore = document.querySelector('.u-l-more'); // 更多
     lmore.page = lmore.page || 1;
     let lis = document.querySelector('.b-lis'); //  盒子
-    lis.innerHTML = ''; // 先清空盒子
+    //lis.innerHTML = ''; // 先清空盒子
     for(let i =0;i<d.playlist.length; i++){
         let p = d.playlist[i];
         let count = p.playCount;

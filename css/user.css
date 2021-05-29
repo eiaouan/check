@@ -125,7 +125,7 @@
 /* 个人主页 */
 #user {
     display: none;
-    padding: 0 40px;
+    /* padding: 0 40px; */
 }
 
 /* 个人信息 */
@@ -221,6 +221,7 @@
 
 .u-lis .hot-son {
     display: inline-block;
+    margin: 0 18px;
 }
 
 /* .u-fs {
@@ -229,7 +230,7 @@
 
 .u-fs ul li {
     display: inline-block;
-    margin: 5px;
+    margin: 5px 13px;
     width: 169px;
     text-align: center;
 }

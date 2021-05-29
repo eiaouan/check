@@ -73,6 +73,7 @@ function onHashChange() {
     }
     if(location.hash == '#/video'){
         let player = document.querySelector('.box-play');
+        let occub = document.querySelector('.occub');
         player.style.display = 'none';
         occub.style.display = 'none'
     }else{
@@ -80,6 +81,9 @@ function onHashChange() {
         let occub = document.querySelector('.occub');
         player.style.display = 'block';
         occub.style.display = 'block';
+        if(playmv.video){
+            playmv.video.pause() // 离开当前页面停止播放
+        }
     }
 }
 

@@ -1,3 +1,4 @@
+// 拖动滚动条
 let slider = {
 
     use: function(id,callBack) {  // 进度条滑动
@@ -10,6 +11,8 @@ let slider = {
                 self.mDown = true;
                 self.beginClientX = e.clientX;
                 self.beginWidth = self.bar.offsetWidth;
+            //    clearInterval(barSong.timew);  //   清除计时器 
+                barSong.removeEventListener('timeupdate',tu,false)
             }
 
         });
@@ -22,15 +25,16 @@ let slider = {
                 self.bar.style.width = '0px';
                 }else{
                     self.bar.style.width = (tw > self.slider.offsetWidth ? self.slider.offsetWidthtw : tw ) + 'px';
-                }
-                callBack();
-            }
+                    // barSong.currentTime = barSong.duration * (currentBar.offsetWidth / bar.offsetWidth);
 
+                }
+            }
         });
 
         document.addEventListener('mouseup', function(e) {
-            if (e.button == 0) {
+            if (self.mDown) {
                 self.mDown = false;
+                callBack&&callBack();
             }
         });
 
@@ -73,19 +77,7 @@ let slider = {
         });
     },
 
-    getStyle: function(obj,styleName){ // 获取元素样式的方法
-
-        if(obj.currentStyle){
-
-            return obj.currentStyle[styleName];
-
-        }else{
-
-            return getComputedStyle(obj,null)[styleName];
-
-        }
-
-    }
+    
 
 };
 
@@ -93,6 +85,9 @@ barSong.setct = function (){
     let bar = document.querySelector('.progress-bar'); // 进度条总长度
     let currentBar = document.querySelector('.bar-white'); // 已播放
     barSong.currentTime = barSong.duration * (currentBar.offsetWidth / bar.offsetWidth);
+    // barSong.seti() // 添加计时器
+    barSong.addEventListener('timeupdate',tu) // 添加事件
+
 }
 slider.use('.progress-bar',barSong.setct);
 
@@ -104,7 +99,6 @@ slider.useY('.voice-bar',barSong.voiceSet);
 // 显示、隐藏音量条
 (function(){
     let voice = document.querySelector('#voice-set');
-    console.log(voice);
     voice.display = display.bind(voice,'.voice-bar');
     voice.display();
 })()
@@ -117,7 +111,6 @@ function display(sclass){
     this.sdis = this.parentNode.querySelector(sclass);  //需要隐藏或者显示的元素
     this.flag = 0;
     this.addEventListener('mousedown',function(e){
-        console.log(e.target);
             if(this.flag){
                 this.flag = 0;
                 this.sdis.style.display = 'none';
@@ -164,31 +157,33 @@ let playmv = {
         this.soffset = 1;
         this.ul = document.querySelector('.s-res ul');
         
-        this.sbtn.addEventListener('click',function(e){
+        this.sbtn.addEventListener('mouseup',function(e){
         // console.log(this);  => s-mv 按钮
-            this.value = document.querySelector('#index-sea').value  // 搜索界面的输入框
+            // this.value = document.querySelector('#index-sea').value  // 搜索界面的输入框
             this.change = changeSCLass;
-            this.change(sendR)
+            this.change()
+            sendR();
         })
         function sendR() { // 发送请求
             // 发送请求
             let det = {     // ajax参数对象
-                type: 'post',
+                type: 'get',
                 url: 'https://autumnfish.cn/search',
                 date: {
-                    keywords: playmv.sbtn.value,
+                    keywords: document.querySelector('#index-sea').value,
                     limit: playmv.slimit,
                     type: 1004,
                     offset: playmv.soffset, // 分页
                 },
-                header: {
-                    'Content-Type': 'application/json'
-                },
+                // header: {
+                //     'Content-Type': 'application/json'
+                // },
                 success: function (d) {
                     loads(d)
                     
                 },
                 error: function (d) {
+                    console.log(d);
                 }
             }
             ajax(det);
@@ -265,10 +260,14 @@ let playmv = {
                 mvid : playmv.mvid,
             },
             success : function(d){
-                console.log(d);
-                let str = '<h1>'+ d.data.name +'</h1>\
-                <p class="v-art">'+  d.data.artistName +'</p>'
-                playmv.page.insertAdjacentHTML('afterbegin',str);
+                // console.log(d);
+                // let str = '<h1>'+ d.data.name +'</h1>\
+                // <p class="v-art">'+  d.data.artistName +'</p>'
+                // playmv.page.insertAdjacentHTML('afterbegin',str);
+                let h1 = playmv.page.querySelector('h1');
+                h1.innerHTML = d.data.name;
+                let art = playmv.page.querySelector('.v-art');
+                art.innerHTML = d.data.artistName;
             },
             error : function(d){
                 console.log(d);
@@ -276,14 +275,22 @@ let playmv = {
         }
         ajax(det);
     },
+    p : null,
     loadComment : function(){
+        let u = document.querySelector('.b-comment ul');
+        u.innerHTML =''; // 清空原有评论
+        const limit = 20;
+        let offset = 1;
+        if(playmv.p){
+            offset = playmv.p.pn 
+        }
         let det = {
             type : 'get',
             url : 'https://autumnfish.cn/comment/mv',
             date : {
                 id : playmv.mvid,
-                limit : 20,
-                offset : 1
+                limit : limit,
+                offset : offset
             },
             success : function(d){
                 playmv.page.comUl = document.querySelector('.b-comment ul')
@@ -300,6 +307,17 @@ let playmv = {
                 </li>'
                 playmv.page.comUl.insertAdjacentHTML('beforeend',str);
                 }
+                let count = null;
+                if(d.total < 99*limit ){
+                    count = Math.floor(d.total/limit);
+                }else{
+                    count = 99;
+                }
+                if(playmv.p){
+                playmv.page.removeChild(playmv.p);
+                }
+                playmv.p = SetPage(offset,count, playmv.loadComment);
+                playmv.page.appendChild(playmv.p);
             },
             error : function(d){
                 console.log(d);
@@ -307,8 +325,6 @@ let playmv = {
         }
         ajax(det);
     }
-
-
 }
 
 playmv.search();
